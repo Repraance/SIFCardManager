@@ -185,5 +185,5 @@ if __name__ == '__main__':
     matcher = Matcher()
     matcher.input_screen_shot()
     matcher.split()
-    matcher.generate_type_index('card_data.json')
+    matcher.generate_type_index('/data/card_data.json')
     matcher.detect_type()
