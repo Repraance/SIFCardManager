@@ -1,0 +1,35 @@
+{
+	"smile": {
+		"unit_attribute": 67080,
+		"skill_detail":[
+			[17, 50, 400, "combo"],
+			[28, 34, 800, "perfect"],
+			[17, 24, 665, "perfect"],
+			[15, 36, 400, "perfect"]
+		]
+	},
+	"cool":{
+		"unit_attribute": 68165,
+		"skill_detail":[
+			[21, 24, 450, "icon"],
+            [24, 30, 460, "icon"],
+            [30, 36, 780, "icon"],
+            [17, 31, 505, "icon"],
+            [15, 50, 400, "perfect"],
+            [24, 30, 460, "icon"],
+            [18, 28, 490, "perfect"]
+		]
+	},
+	"pure":{
+		"unit_attribute": 64001,
+		"skill_detail":[
+			[17, 36, 450, "combo"],
+			[14, 50, 185, "perfect"],
+			[29, 36, 575, "combo"],
+			[29, 39, 445, "icon"],
+			[13, 35, 600, "second"],
+			[25, 33, 390, "icon"],
+			[15, 50, 400, "perfect"]
+		]
+	}
+}
