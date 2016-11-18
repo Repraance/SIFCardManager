@@ -27,6 +27,7 @@ class Matcher:
         for every_filename in filename:
             raw_screen_shot_img = cv2.imread(every_filename)
             if raw_screen_shot_img is not None:
+                screen_shot_img = self.remove_edge(raw_screen_shot_img)
                 self.raw_screen_shot.append(raw_screen_shot_img)
 
     def show_raw_screen_shot(self):
@@ -49,13 +50,16 @@ class Matcher:
         px_sum = 0
         width = src.shape[0]
         height = src.shape[1]
-        for y in range(0, width):
-            for x in range(0, height):
-                if src.ndim == 3:
+        if src.ndim == 3:
+            for y in range(0, width):
+                for x in range(0, height):
                     px_sum += src[y, x][0]
                     px_sum += src[y, x][1]
                     px_sum += src[y, x][2]
-                if src.ndim == 2:
+
+        if src.ndim == 2:
+            for y in range(0, width):
+                for x in range(0, height):
                     px_sum += src[y, x]
         return px_sum
 
@@ -72,26 +76,33 @@ class Matcher:
         return px_count
 
     # 获取当前卡截图与模板图像的最小差值
-    def get_min_diff(self, src, template, global_offset=(0, 0)):
+    def get_min_diff(self, src, template, global_offset=(0, 0), mask=None, display=False):
         diff_mask = template
-        if template.ndim == 3:
-            diff_mask = cv2.cvtColor(diff_mask, cv2.COLOR_BGR2GRAY)
+        if mask is None:
+            if template.ndim == 3:
+                diff_mask = cv2.cvtColor(diff_mask, cv2.COLOR_BGR2GRAY)
+        else:
+            diff_mask = mask
         offset = [0, 0]
         pixel_sum_min = 100000000
         for offset_i in range(0, 3):
             for offset_j in range(0, 3):
                 cropped = src[offset_j + global_offset[0]: offset_j + global_offset[0] + template.shape[0],
                               offset_i + global_offset[1]: offset_i + global_offset[1] + template.shape[1]]
-                diff = cv2.subtract(template, cropped, mask=diff_mask)
+                # diff = cv2.subtract(template, cropped, mask=diff_mask)
+                diff = cv2.absdiff(template, cropped)
                 current_pixel_sum = self.pixel_sum(diff)
                 if current_pixel_sum < pixel_sum_min:
                     pixel_sum_min = current_pixel_sum
                     offset = [offset_j, offset_i]
         # print pixel_sum_min, offset
-        cropped = src[offset[0]: offset[0] + template.shape[0], offset[1]: offset[1] + template.shape[1]]
-        diff = cv2.subtract(cropped, template, mask=diff_mask)
-        # cv2.imshow('sd', diff)
-        # cv2.waitKey()
+        if display:
+            cropped = src[offset[0] + global_offset[0]: offset[0] + global_offset[0] + template.shape[0],
+                          offset[1] + global_offset[1]: offset[1] + global_offset[1] + template.shape[1]]
+            diff = cv2.subtract(template, cropped, mask=diff_mask)
+            cv2.imshow('tem', template)
+            cv2.imshow('sd', diff)
+            cv2.waitKey()
         return pixel_sum_min
 
     # 创建属性和稀有度的类型索引
@@ -121,6 +132,11 @@ class Matcher:
                 single_card = card_list[row_start[j]: row_start[j] + self.card_width,
                                         col_start[i]: col_start[i] + self.card_width]
                 self.card_icon.append(single_card)
+                card_rankup = self.detect_rankup(single_card)
+                card_attr = self.detect_attr(single_card)
+                card_rarity = self.detect_rarity(single_card)
+                card_type = card_rarity + card_attr
+                self.match(single_card, card_type, card_rankup)
 
     def prepare_data(self):
         self.generate_type_index()
@@ -137,38 +153,33 @@ class Matcher:
         return max_value_index
 
     # 检测卡的属性（颜色）
-    def detect_attr(self):
-        for card in self.card_icon:
-            color = list()
-            color_count = list()
-            for i in range(15, 19):
-                pixel_val = card[100, i]
-                color.append(self.get_max_value_index(pixel_val))
-            for i in range(0, 3):
-                color_count.append(color.count(i))
-            attr = self.attr_index[self.get_max_value_index(color_count)]
-            self.card_attr.append(attr)
+    def detect_attr(self, card):
+        color = list()
+        color_count = list()
+        for i in range(15, 19):
+            pixel_val = card[100, i]
+            color.append(self.get_max_value_index(pixel_val))
+        for i in range(0, 3):
+            color_count.append(color.count(i))
+        attr = self.attr_index[self.get_max_value_index(color_count)]
+        return attr
 
     # 检测卡的稀有度
-    def detect_rarity(self):
-        for card in self.card_icon:
-            card_gray = cv2.cvtColor(card, cv2.COLOR_BGR2GRAY)
-            min_average_pixel_sum = 100000000
-            result_rarity_name = ''
-            for rarity_name in self.rarity_index:
-                template_raw = cv2.imread('../assets/symbol/' + rarity_name + '.png', 0)
-                if template_raw is not None:
-                    template = template_raw[0: 40, 0: 43]
-                    # pixel_count = float(self.rarity_symbol_pixel_count_index[rarity_name])
-                    pixel_count = 1
-                    if rarity_name == 'N':
-                        pixel_count = 0.5
-                    current_average_pixel_sum = self.get_min_diff(card_gray, template) / pixel_count
-                    # print type_name, current_average_pixel_sum
-                    if current_average_pixel_sum < min_average_pixel_sum:
-                        min_average_pixel_sum = current_average_pixel_sum
-                        result_rarity_name = rarity_name
-            self.card_rarity.append(result_rarity_name)
+    def detect_rarity(self, card):
+        card_gray = cv2.cvtColor(card, cv2.COLOR_BGR2GRAY)
+        min_average_pixel_sum = 100000000
+        result_rarity_name = ''
+        for rarity_name in self.rarity_index:
+            template_raw = cv2.imread('../assets/symbol/' + rarity_name + '.png', 0)
+            if template_raw is not None:
+                template = template_raw[0: 40, 0: 43]
+                pixel_count = self.rarity_symbol_pixel_count_index[rarity_name]
+                current_average_pixel_sum = self.get_min_diff(card_gray, template, display=False) / pixel_count
+                # print type_name, current_average_pixel_sum
+                if current_average_pixel_sum < min_average_pixel_sum:
+                    min_average_pixel_sum = current_average_pixel_sum
+                    result_rarity_name = rarity_name
+        return result_rarity_name
 
     def detect_type(self):
         self.detect_rarity()
@@ -177,9 +188,37 @@ class Matcher:
         for i in range(0, card_count):
             self.card_type.append(self.card_rarity[i] + self.card_attr[i])
 
-    def match(self):
+    def detect_rankup(self, card):
+        pixel_val = card[35, 5]
+        if pixel_val[0] < 100 and pixel_val[1] > 200 and pixel_val[2] > 200:
+            return True
+        else:
+            return False
+
+    def match(self, card, card_type, rankup):
+        card_gray = cv2.cvtColor(card, cv2.COLOR_BGR2GRAY)
         face_mask = np.zeros((128, 128, 1), np.uint8)
-        cv2.circle(face_mask, (63, 63), 53, 255, -1)
+        cv2.circle(face_mask, (63, 63), 50, 255, -1)
+        min_pixel_sum = 100000000
+        result_card_id = 0
+        path_prefix = ''
+        for card_id in self.type_index[card_type]:
+            if rankup:
+                path_prefix = '../assets/icon/rankup/'
+            else:
+                path_prefix = '../assets/icon/normal/'
+            template = cv2.imread(path_prefix + card_id + '.png', 0)
+            if template is not None:
+                current_pixel_sum = self.get_min_diff(card_gray, template, mask=face_mask, display=False)
+                if current_pixel_sum < min_pixel_sum:
+                    min_pixel_sum = current_pixel_sum
+                    result_card_id = card_id
+                print current_pixel_sum
+        print result_card_id
+        result_card = cv2.imread(path_prefix + result_card_id + '.png')
+        cv2.imshow('re', result_card)
+        cv2.waitKey()
+
 
 if __name__ == '__main__':
     os.chdir('../test')
@@ -187,4 +226,3 @@ if __name__ == '__main__':
     matcher.prepare_data()
     matcher.input_screen_shot()
     matcher.split()
-    matcher.detect_type()
