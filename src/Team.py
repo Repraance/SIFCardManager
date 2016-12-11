@@ -10,3 +10,9 @@ class Team:
 
     def set_school_idol_skills(self):
         pass
+
+    def set_members_position(self):
+        pass
+
+    def show_team_details(self):
+        pass
