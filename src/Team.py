@@ -225,7 +225,7 @@ class Team:
                         guest_leader_skill_bonus = math.ceil(member[effect_type] *
                                                              self.guest_leader_skill_info['effect_value'] / 100)
 
-                # 副 leader技能对该卡的加成
+                # Guest 副 leader技能对该卡的加成
                 guest_leader_skill_extra_bonus = 0
                 if self.guest_leader_skill_extra_info:
                     if self.leader_skill_extra_info['tag'] in member['tag']:

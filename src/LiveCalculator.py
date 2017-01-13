@@ -39,5 +39,6 @@ class LiveCalculator:
 if __name__ == '__main__':
     lc = LiveCalculator()
     lc.set_live(397)
+    print lc.live_info
     print lc.live_notes
 
