@@ -39,6 +39,8 @@ class LiveCalculator:
 if __name__ == '__main__':
     lc = LiveCalculator()
     lc.set_live(397)
-    print lc.live_info
+    print lc.live_info['name'], lc.live_info['s_rank_combo'], lc.live_info['difficulty_text']
+    combo = 0
     print lc.live_notes
+    print sorted(lc.live_notes, key=lambda d: d['timing_sec'])
 
