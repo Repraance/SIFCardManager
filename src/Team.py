@@ -10,6 +10,10 @@ attribute_index = {
     3: 'cool'
 }
 
+tag_index = {
+
+}
+
 
 class Team:
     def __init__(self, team_json=None):
@@ -36,10 +40,15 @@ class Team:
 
         # Inquire skill info
         sql_skill = '''
-                            SELECT unit_skill_m.name, unit_skill_m.skill_effect_type,
-                                   unit_skill_m.discharge_type, unit_skill_m.trigger_type,
-                                   unit_skill_level_m.description, unit_skill_level_m.effect_value,
-                                   unit_skill_level_m.trigger_value, unit_skill_level_m.activation_rate
+                            SELECT unit_skill_m.name,
+                                   unit_skill_m.skill_effect_type,
+                                   unit_skill_m.discharge_type,
+                                   unit_skill_m.trigger_type,
+                                   unit_skill_level_m.description,
+                                   unit_skill_level_m.effect_value,
+                                   unit_skill_level_m.discharge_time,
+                                   unit_skill_level_m.trigger_value,
+                                   unit_skill_level_m.activation_rate
                             FROM unit_skill_m, unit_skill_level_m
                             WHERE unit_skill_m.unit_skill_id = (
                                 SELECT default_unit_skill_id
@@ -51,6 +60,10 @@ class Team:
                             AND
                             skill_level = ?
                         '''
+
+        skill_info_keys = ('skill_name', 'skill_effect_type', 'discharge_type',
+                           'trigger_type', 'description', 'effect_value', 'discharge_time',
+                           'trigger_value', 'activation_rate')
 
         # Inquire member tag
         sql_member_tag = '''
@@ -76,7 +89,10 @@ class Team:
                             )
                         '''
 
-        # 查副 leader 技能
+        leader_skill_info_keys = ('leader_skill_name', 'description',
+                                  'effect_type_id', 'effect_value')
+
+        # Inquire extra leader skill
         sql_leader_skill_extra = '''
                             SELECT unit_leader_skill_extra_m.member_tag_id,
                                    unit_leader_skill_extra_m.leader_skill_effect_type,
@@ -89,29 +105,22 @@ class Team:
                             )
                         '''
 
-        skill_info_keys = ('skill_name', 'skill_effect_type', 'discharge_type',
-                           'trigger_type', 'description', 'effect_value',
-                           'trigger_value', 'activation_rate')
-
-        leader_skill_info_keys = ('leader_skill_name', 'description',
-                                  'effect_type_id', 'effect_value')
-
         leader_skill_extra_info_keys = ('tag',
                                         'effect_type_id',
                                         'effect_value')
 
         self.leader = self.members[4]
 
-        # 根据 leader 属性确定队伍默认属性
+        # Get team attribute/color by leader's attribute/color
         curs.execute('SELECT attribute_id FROM unit_m WHERE unit_number = ?',
                      (self.leader['cardid'],))
         self.default_attribute_id = curs.fetchall()[0][0]
 
-        # 获取 leader 技能
+        # Get leader skill
         curs.execute(sql_leader_skill, (self.leader['cardid'],))
         leader_skill_result = curs.fetchall()
 
-        # 如果 leader 技能存在
+        # If leader skill exist
         if leader_skill_result:
             self.leader_skill_info = dict(zip(leader_skill_info_keys, leader_skill_result[0]))
 
@@ -121,20 +130,20 @@ class Team:
             elif effect_type > 100:
                 self.leader_skill_info['effect_type_id'] = (effect_type / 10) % 10
 
-        # 获取副 leader 技能
+        # Get extra leader skill
         curs.execute(sql_leader_skill_extra, (self.leader['cardid'],))
         leader_skill_extra_result = curs.fetchall()
 
         if leader_skill_extra_result:
             self.leader_skill_extra_info = dict(zip(leader_skill_extra_info_keys, leader_skill_extra_result[0]))
 
-        # 获取全体宝石信息
+        # Get Aura/Veil school idol skills info (effect on the whole team)
         for member in self.members:
             self.gemallpercent.append(member['gemallpercent'])
 
         for member in self.members:
 
-            # 查询技能信息
+            # Inquire skill info
             curs.execute(sql_skill, (member['cardid'], member['skilllevel']))
             skill_result = curs.fetchall()
             member['skill_info'] = None
@@ -144,13 +153,13 @@ class Team:
                 if member['gemskill']:
                     member['skill_info']['effect_value'] *= 2.5
 
-            # 查询成员
+            # Inquire member's name and attribute_id
             curs.execute('SELECT name, attribute_id FROM unit_m WHERE unit_number = ?',
                          (member['cardid'],))
             # member['name'] = curs.fetchall()[0]
-            member.update(dict(zip(('name', 'attribute'), (curs.fetchall()))))
+            member.update(dict(zip(('name', 'attribute_id'), (curs.fetchall()[0]))))
 
-            # 查询小队信息
+            # Inquire member's tag and unit
             curs.execute(sql_member_tag, (member['cardid'],))
             member['tag'] = map(lambda x: x[0], curs.fetchall())
             member['unit'] = None
@@ -169,63 +178,67 @@ class Team:
             self.guest_leader_skill_extra_info = dict(zip(('effect_type_id',
                                                           'effect_value', 'tag'), guest[1]))
 
-    def calculate_total(self, attribute_id):
-        attribute = attribute_index[attribute_id]  # attribute 是属性的字符串，如 'smile'
+    def calculate_total_attribute(self, attribute_id):
+        attribute = attribute_index[attribute_id]  # attribute is a string，e.g.'smile'
         total = 0
 
-        # 若所求属性和 leader 属性一致
+        # If target attribute agrees with the team default attribute
         if attribute_id is self.default_attribute_id:
             for member in self.members:
-                # 该卡裸属性
+                # bare attribute value
                 bare_attribute = member[attribute]
 
-                # 单体宝石的加成
+                # bonus from school idol skills effect on single member
                 gem_single_bonus = member['gemnum'] + math.ceil(bare_attribute * member['gemsinglepercent'])
 
-                # 全体宝石的加成
+                # bonus from school idol skills effect on sthe whole team
                 gem_all_bonus = 0
                 for value in self.gemallpercent:
                     gem_all_bonus += math.ceil(bare_attribute * value)
 
-                # 队伍宝石对该卡的总加成
+                # bonus from all school idol skills
                 gem_bonus_attribute = bare_attribute + gem_single_bonus + gem_all_bonus
 
-                # leader 技能对该卡的加成
+                # bonus from leader skill
                 leader_skill_bonus = 0
                 if self.leader_skill_info:
                     effect_type_id = self.leader_skill_info['effect_type_id']
                     effect_type = attribute_index[effect_type_id]
 
-                    # 如果是旧 C
+                    # If old leader skill e.g.クールPが9%UPする
                     if effect_type_id is self.default_attribute_id:
                         leader_skill_bonus = math.ceil(gem_bonus_attribute *
                                                        self.leader_skill_info['effect_value'] / 100)
+
+                    # If new leader skill e.g.スマイルPの12%分クールPがUPする
                     else:
                         leader_skill_bonus = math.ceil(member[effect_type] *
                                                        self.leader_skill_info['effect_value'] / 100)
 
-                # 副 leader技能对该卡的加成
+                # bonus from extra leader skill
                 leader_skill_extra_bonus = 0
                 if self.leader_skill_extra_info:
                     if self.leader_skill_extra_info['tag'] in member['tag']:
                         leader_skill_extra_bonus = math.ceil(gem_bonus_attribute *
                                                              self.leader_skill_extra_info['effect_value'] / 100)
 
-                # Guest leader 技能对该卡的加成
+                # bonus from guest's leader skill
                 guest_leader_skill_bonus = 0
                 if self.guest_leader_skill_info:
                     effect_type_id = self.guest_leader_skill_info['effect_type_id']
                     effect_type = attribute_index[effect_type_id]
 
-                    # 如果是旧 C
+                    # If old leader skill e.g.クールPが9%UPする
                     if effect_type_id is self.default_attribute_id:
                         guest_leader_skill_bonus = math.ceil(gem_bonus_attribute *
                                                              self.guest_leader_skill_info['effect_value'] / 100)
+
+                    # If new leader skill e.g.スマイルPの12%分クールPがUPする
                     else:
                         guest_leader_skill_bonus = math.ceil(member[effect_type] *
                                                              self.guest_leader_skill_info['effect_value'] / 100)
 
-                # Guest 副 leader技能对该卡的加成
+                # bonus from guest's extra leader skill
                 guest_leader_skill_extra_bonus = 0
                 if self.guest_leader_skill_extra_info:
                     if self.leader_skill_extra_info['tag'] in member['tag']:
@@ -266,7 +279,8 @@ if __name__ == '__main__':
     cool_muse = Team(u"../data/team/藍[μ's].sd")
     red_guest = [[1, 9], [1, 6, 8]]
     red_aqours.add_guest(red_guest)
-    print red_aqours.calculate_total(1)
-    print pure_aqours.calculate_total(2)
-    print cool_aqours.calculate_total(3)
+    print red_aqours.calculate_total_attribute(1)
+    print pure_aqours.calculate_total_attribute(2)
+    print cool_aqours.calculate_total_attribute(3)
     print red_aqours.leader_skill_extra_info
+    red_muse.show_members_info()
