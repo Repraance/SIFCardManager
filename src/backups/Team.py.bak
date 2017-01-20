@@ -1,7 +1,5 @@
 # coding:utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
 import json
 import urllib
 import sqlite3
@@ -264,18 +262,18 @@ class Team:
 
     def show_members_info(self):
         for member in self.members:
-            print('----------------------------------------')
+            print '----------------------------------------'
             for key, value in member.iteritems():
                 if key is 'skill_info':
-                    print('%16s : ' % ('skill_info',))
+                    print '%16s : ' % ('skill_info',)
                     for k, v in member['skill_info'].iteritems():
-                        print('%16s%20s : %s' % (u'|', k, v))
+                        print '%16s%20s : %s' % (u'|', k, v)
                 else:
-                    print('%16s : %s' % (key, value))
+                    print '%16s : %s' % (key, value)
 
     def show_leader_skill_info(self):
         for key, value in self.leader_skill_info.iteritems():
-            print('%20s : %s' % (key, value))
+            print '%20s : %s' % (key, value)
 
 if __name__ == '__main__':
 
@@ -293,4 +291,4 @@ if __name__ == '__main__':
     # print red_aqours.leader_skill_extra_info
     t = Team(u"../data/team/s.sd")
     t.show_members_info()
-    print(t.calculate_total_attribute(1))
+    print t.calculate_total_attribute(1)

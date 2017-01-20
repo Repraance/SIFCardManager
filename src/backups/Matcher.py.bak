@@ -1,7 +1,5 @@
 # coding:utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
 import os
 import json
 import tkFileDialog
@@ -109,7 +107,7 @@ class Matcher:
 
     # 创建属性和稀有度的类型索引
     def generate_type_index(self, card_data_json='../data/card_data.json'):
-        card_data = json.load(open(card_data_json))
+        card_data = json.load(file(card_data_json))
         for card_id in card_data:
             # 检测是否含有键'rarity'和'attribute'
             if 'rarity' and 'attribute' in card_data[card_id]:
@@ -215,8 +213,8 @@ class Matcher:
                 if current_pixel_sum < min_pixel_sum:
                     min_pixel_sum = current_pixel_sum
                     result_card_id = card_id
-                print(current_pixel_sum)
-        print(result_card_id)
+                print current_pixel_sum
+        print result_card_id
         result_card = cv2.imread(path_prefix + result_card_id + '.png')
         cv2.imshow('re', result_card)
         cv2.waitKey()

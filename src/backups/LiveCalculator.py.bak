@@ -1,7 +1,5 @@
 # coding:utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
 import json
 import math
 from Team import Team
@@ -16,7 +14,7 @@ class LiveCalculator:
         with open(u'../assets/maps/maps.json') as fp:
             self.all_lives_info = json.load(fp)
         if self.all_lives_info:
-            print('Live info loaded.')
+            print 'Live info loaded.'
 
     def test(self):
         effect_enum = list()
@@ -27,10 +25,10 @@ class LiveCalculator:
                 for note in live_notes:
                     if note['effect'] not in effect_enum:
                         effect_enum.append(note['effect'])
-                        print('effect_type:')
-                        print(note['effect'])
-                        print('appearred in:')
-                        print(live_info['live_setting_id'])
+                        print 'effect_type:'
+                        print note['effect']
+                        print 'appearred in:'
+                        print live_info['live_setting_id']
 
     def set_team(self, team):
         self.team = team
@@ -123,7 +121,7 @@ class LiveCalculator:
         live_category = self.live_info['member_category']
         members = self.team.members
         team_total_attribute = self.team.calculate_total_attribute(self.live_info['attribute_icon_id'])
-        print(team_total_attribute)
+        print team_total_attribute
 
         # Calculate type factor for every member
         for member in members:
@@ -227,7 +225,7 @@ class LiveCalculator:
                     skill_score += skill_expected_score
 
             total_score = attribute_score + skill_score
-            print(total_score)
+            print total_score
 
             # Burst scoring up cards expected scoring bonus (e.g. スコア15000達成ごとに13%の確率でスコアが1120増える)
             for member in members:
@@ -242,7 +240,7 @@ class LiveCalculator:
                             total_scoring_up_rate += scoring_up_rate
                 total_score /= (1 - total_scoring_up_rate)
 
-            print(total_score, slider_note_count)
+            print total_score, slider_note_count
 
     def calculate_timing_coverage(self):
         pass
