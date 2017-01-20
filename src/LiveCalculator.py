@@ -115,6 +115,7 @@ class LiveCalculator:
     # 0 is default value and indicates full combo
     # When full combo, you will get only perfect and great
     def calculate_expected_score(self, perfect_rate, max_combo=0):
+        returns = {}
         attribute_score = 0
         skill_score = 0
         total_score = 0
@@ -123,7 +124,7 @@ class LiveCalculator:
         live_category = self.live_info['member_category']
         members = self.team.members
         team_total_attribute = self.team.calculate_total_attribute(self.live_info['attribute_icon_id'])
-        print(team_total_attribute)
+        returns['team_total_attribute'] = team_total_attribute
 
         # Calculate type factor for every member
         for member in members:
@@ -227,7 +228,7 @@ class LiveCalculator:
                     skill_score += skill_expected_score
 
             total_score = attribute_score + skill_score
-            print(total_score)
+            returns['total_score'] = total_score
 
             # Burst scoring up cards expected scoring bonus (e.g. スコア15000達成ごとに13%の確率でスコアが1120増える)
             for member in members:
@@ -241,8 +242,10 @@ class LiveCalculator:
                                               skill_info['activation_rate'] / 100.0
                             total_scoring_up_rate += scoring_up_rate
                 total_score /= (1 - total_scoring_up_rate)
-
-            print(total_score, slider_note_count)
+                returns['total_score_burst'] = total_score
+                returns['slider_note_count'] = slider_note_count
+            print('raw score: {}, total_score: {}, slider_note_count: {}'.format(returns['total_score'], returns['total_score_burst'], returns['slider_note_count']))
+            return returns
 
     def calculate_timing_coverage(self):
         pass

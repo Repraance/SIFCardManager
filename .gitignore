@@ -16,3 +16,4 @@
 /assets/Fromieb/
 *.ipynb
 .ipynb_checkpoints
+__pycache__/

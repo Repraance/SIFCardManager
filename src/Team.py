@@ -3,10 +3,18 @@
 from __future__ import absolute_import
 from __future__ import print_function
 import json
-import urllib
 import sqlite3
 import math
+import sys
+if sys.version_info[0] < 3:
+    import urllib
+    urlunqote = urllib.unquote
+else:
+    import urllib.parse
+    urlunqote = urllib.parse.unquote
+    unicode = str
 
+    
 attribute_index = {
     1: 'smile',
     2: 'pure',
@@ -32,7 +40,7 @@ class Team:
         if team_json:
             with open(team_json) as fp:
                 txt = fp.read()
-                txt_encode = urllib.unquote(txt)
+                txt_encode = urlunqote(txt)
                 raw_team_json = json.loads(txt_encode)
                 for card in raw_team_json:
                     for key in card:
@@ -169,7 +177,7 @@ class Team:
 
             # Inquire member's tag and unit
             curs.execute(sql_member_tag, (member['cardid'],))
-            member['tag'] = map(lambda x: x[0], curs.fetchall())
+            member['tag'] = list(map(lambda x: x[0], curs.fetchall()))
             member['unit'] = None
             if 4 in member['tag']:
                 member['unit'] = "μ's"
@@ -265,10 +273,10 @@ class Team:
     def show_members_info(self):
         for member in self.members:
             print('----------------------------------------')
-            for key, value in member.iteritems():
+            for key, value in member.items():
                 if key is 'skill_info':
                     print('%16s : ' % ('skill_info',))
-                    for k, v in member['skill_info'].iteritems():
+                    for k, v in member['skill_info'].items():
                         print('%16s%20s : %s' % (u'|', k, v))
                 else:
                     print('%16s : %s' % (key, value))
