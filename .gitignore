@@ -14,3 +14,5 @@
 /test/4.png
 /test/5.png
 /assets/Fromieb/
+*.ipynb
+.ipynb_checkpoints
