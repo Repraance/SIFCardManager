@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 import json
 import math
-from Team import Team
+from card_manager.team import Team
 
 
 class LiveCalculator:
@@ -13,7 +13,7 @@ class LiveCalculator:
         self.live_notes = None
         self.team = None
         # load all lives info from maps.json
-        with open(u'../assets/maps/maps.json') as fp:
+        with open(u'../data/maps/maps.json') as fp:
             self.all_lives_info = json.load(fp)
         if self.all_lives_info:
             print('Live info loaded.')
@@ -59,7 +59,7 @@ class LiveCalculator:
             if live_info['live_setting_id'] == live_id:
                 self.live_info = live_info
                 notes_json = live_info['notes_setting_asset']
-                with open(u'../assets/maps/latest/' + notes_json) as fp:
+                with open(u'../data/maps/latest/' + notes_json) as fp:
                     self.live_notes = json.load(fp)
                 break
 
@@ -229,6 +229,7 @@ class LiveCalculator:
 
             total_score = attribute_score + skill_score
             returns['total_score'] = total_score
+            total_scoring_up_rate = 0
 
             # Burst scoring up cards expected scoring bonus (e.g. スコア15000達成ごとに13%の確率でスコアが1120増える)
             for member in members:
@@ -241,9 +242,9 @@ class LiveCalculator:
                             scoring_up_rate = skill_info['effect_value'] / skill_info['trigger_value'] * \
                                               skill_info['activation_rate'] / 100.0
                             total_scoring_up_rate += scoring_up_rate
-                total_score /= (1 - total_scoring_up_rate)
-                returns['total_score_burst'] = total_score
-                returns['slider_note_count'] = slider_note_count
+            total_score /= (1 - total_scoring_up_rate)
+            returns['total_score_burst'] = total_score
+            returns['slider_note_count'] = slider_note_count
             print('raw score: {}, total_score: {}, slider_note_count: {}'.format(returns['total_score'], returns['total_score_burst'], returns['slider_note_count']))
             return returns
 

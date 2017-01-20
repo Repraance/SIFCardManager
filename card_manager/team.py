@@ -51,7 +51,7 @@ class Team:
 
     def set_team_info(self):
         # Set up sqlite connection and cursor
-        conn = sqlite3.connect('../data/db/unit/unit.db_')
+        conn = sqlite3.connect('../data/db/unit.db_')
         curs = conn.cursor()
 
         # Inquire skill info
