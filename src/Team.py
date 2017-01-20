@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import json
+import urllib
 import sqlite3
 import math
 
@@ -28,8 +29,13 @@ class Team:
 
         if team_json:
             with open(team_json) as fp:
-                raw_team_json = json.load(fp)
+                txt = fp.read()
+                txt_encode = urllib.unquote(txt)
+                raw_team_json = json.loads(txt_encode)
                 for card in raw_team_json:
+                    for key in card:
+                        if type(card[key]) == unicode:
+                            card[key] = float(card[key])
                     self.members.append(card)
                 self.set_team_info()
 
@@ -271,16 +277,18 @@ class Team:
 
 if __name__ == '__main__':
 
-    red_aqours = Team(u"../data/team/紅[Aqours].sd")
-    pure_aqours = Team(u"../data/team/緑[Aqours].sd")
-    cool_aqours = Team(u"../data/team/藍[Aqours].sd")
-    red_muse = Team(u"../data/team/紅[μ's].sd")
-    pure_muse = Team(u"../data/team/緑[μ's].sd")
-    cool_muse = Team(u"../data/team/藍[μ's].sd")
-    red_guest = [[1, 9], [1, 6, 8]]
-    red_aqours.add_guest(red_guest)
-    print red_aqours.calculate_total_attribute(1)
-    print pure_aqours.calculate_total_attribute(2)
-    print cool_aqours.calculate_total_attribute(3)
-    print red_aqours.leader_skill_extra_info
-    red_muse.show_members_info()
+    # red_aqours = Team(u"../data/team/紅[Aqours].sd")
+    # pure_aqours = Team(u"../data/team/緑[Aqours].sd")
+    # cool_aqours = Team(u"../data/team/藍[Aqours].sd")
+    # red_muse = Team(u"../data/team/紅[μ's].sd")
+    # pure_muse = Team(u"../data/team/緑[μ's].sd")
+    # cool_muse = Team(u"../data/team/藍[μ's].sd")
+    # red_guest = [[1, 9], [1, 6, 8]]
+    # red_aqours.add_guest(red_guest)
+    # print red_aqours.calculate_total_attribute(1)
+    # print pure_aqours.calculate_total_attribute(2)
+    # print cool_aqours.calculate_total_attribute(3)
+    # print red_aqours.leader_skill_extra_info
+    t = Team(u"../data/team/s.sd")
+    t.show_members_info()
+    print t.calculate_total_attribute(1)

@@ -115,11 +115,13 @@ class LiveCalculator:
     def calculate_expected_score(self, perfect_rate, max_combo=0):
         attribute_score = 0
         skill_score = 0
+        total_score = 0
 
         live_attribute_id = self.live_info['attribute_icon_id']
         live_category = self.live_info['member_category']
         members = self.team.members
         team_total_attribute = self.team.calculate_total_attribute(self.live_info['attribute_icon_id'])
+        print team_total_attribute
 
         # Calculate type factor for every member
         for member in members:
@@ -134,8 +136,9 @@ class LiveCalculator:
         basic_score = team_total_attribute * 0.0125
         star_note_count = 0
         token_note_count = 0
+        slider_note_count = 0
         current_combo = 0
-        total_combo = 0
+        total_note_count = 0
         result_combo = 0
 
         if max_combo == 0:
@@ -155,7 +158,7 @@ class LiveCalculator:
 
                     attribute_score += note_expected_score
                     current_combo += 1.0
-                    total_combo += 1.0
+                    total_note_count += 1.0
 
                     if note['effect'] == 4:
                         star_note_count += 1.0
@@ -174,7 +177,19 @@ class LiveCalculator:
 
                     attribute_score += note_expected_score
                     current_combo += 1.0
-                    total_combo += 1.0
+                    total_note_count += 1.0
+                    slider_note_count += 1.0
+
+            # A slider note has a start and a ending.
+            # Only when twice is perfect, the perfect lock can be triggered,
+            # in this way the total perfect rate would be a little smaller
+            slider_perfect_rate = perfect_rate ** 2
+            slider_note_proportion = slider_note_count / total_note_count
+            total_perfect_rate = slider_note_proportion * slider_perfect_rate + (1 -
+                                                                                 slider_note_proportion) * perfect_rate
+
+            # perfect count is not certain itself, so it doesn't floored here
+            perfect_count = total_note_count * total_perfect_rate
 
             for member in members:
                 skill_info = member['skill_info']
@@ -186,23 +201,46 @@ class LiveCalculator:
 
                         # 'trigger_type': 3 indicates icon
                         if skill_info['trigger_type'] == 3:
-                            skill_expected_score = total_combo / skill_info['trigger_value'] * \
+                            skill_expected_score = math.floor(total_note_count / skill_info['trigger_value']) * \
                                                    skill_info['activation_rate'] / 100.0 * skill_info['effect_value']
 
                         # 'trigger_type': 4 indicates combo
                         if skill_info['trigger_type'] == 4:
-                            skill_expected_score = total_combo / skill_info['trigger_value'] * \
+                            skill_expected_score = math.floor(total_note_count / skill_info['trigger_value']) * \
                                                    skill_info['activation_rate'] / 100.0 * skill_info[
                                                        'effect_value']
 
                         # 'trigger_type': 6 indicates Perfect
                         if skill_info['trigger_type'] == 6:
-                            skill_expected_score = total_combo * perfect_rate / skill_info['trigger_value'] * \
+
+                            skill_expected_score = math.floor(perfect_count / skill_info['trigger_value']) * \
+                                skill_info['activation_rate'] / 100.0 * skill_info['effect_value']
+
+                        # 'trigger_type': 12 indicates star icon
+                        if skill_info['trigger_type'] == 12:
+                            skill_expected_score = math.floor(star_note_count / skill_info['trigger_value']) * \
                                                    skill_info['activation_rate'] / 100.0 * skill_info[
                                                        'effect_value']
+
                     skill_score += skill_expected_score
 
-            print attribute_score + skill_score
+            total_score = attribute_score + skill_score
+            print total_score
+
+            # Burst scoring up cards expected scoring bonus (e.g. スコア15000達成ごとに13%の確率でスコアが1120増える)
+            for member in members:
+                skill_info = member['skill_info']
+                total_scoring_up_rate = 0
+                if skill_info:
+                    if skill_info['skill_effect_type'] == 11:
+                        # 'trigger_type': 5 indicates score
+                        if skill_info['trigger_type'] == 5:
+                            scoring_up_rate = skill_info['effect_value'] / skill_info['trigger_value'] * \
+                                              skill_info['activation_rate'] / 100.0
+                            total_scoring_up_rate += scoring_up_rate
+                total_score /= (1 - total_scoring_up_rate)
+
+            print total_score, slider_note_count
 
     def calculate_timing_coverage(self):
         pass
@@ -213,15 +251,15 @@ class LiveCalculator:
 
 if __name__ == '__main__':
     red_muse = Team(u"../data/team/紅[μ's].sd")
-    t = Team(u"../data/team/ユニットI.sd")
+    t = Team(u"../data/team/s.sd")
     red_guest = [[1, 9], [1, 6, 8]]
     # red_muse.add_guest(red_guest)
     lc = LiveCalculator()
-    lc.set_live(529)
+    lc.set_live(563)
     lc.set_team(red_muse)
-    print lc.team.calculate_total_attribute(1)
+    lc.set_team(t)
     lc.calculate_expected_score(0.95)
-    # lc.team.show_members_info()
+    lc.team.show_members_info()
 
 
 
