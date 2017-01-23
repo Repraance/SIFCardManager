@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 import json
 import math
+import time
 from card_manager.team import Team
 
 
@@ -11,42 +12,24 @@ class LiveCalculator:
     def __init__(self):
         self.live_info = None
         self.live_notes = None
+        self.live_notes_count = 0
+        self.live_notes_count_slider_twice = 0
+        self.live_length = 0
         self.team = None
         # load all lives info from maps.json
         with open(u'../data/maps/maps.json') as fp:
             self.all_lives_info = json.load(fp)
         if self.all_lives_info:
-            print('Live info loaded.')
+            print('Lives info loaded.\n')
 
     def test(self):
-        effect_enum = list()
-        for live_info in self.all_lives_info:
-            notes_json = live_info['notes_setting_asset']
-            with open(u'../assets/maps/latest/' + notes_json) as fp:
-                live_notes = json.load(fp)
-                for note in live_notes:
-                    if note['effect'] not in effect_enum:
-                        effect_enum.append(note['effect'])
-                        print('effect_type:')
-                        print(note['effect'])
-                        print('appearred in:')
-                        print(live_info['live_setting_id'])
+        for note in self.live_notes:
+            print(note)
 
     def set_team(self, team):
         self.team = team
 
     # Some live info tips:
-    #
-    # live_info['difficulty']:
-    # {
-    #  1: 'EASY',
-    #  2: 'NORMAL',
-    #  3: 'HARD',
-    #  4: 'EXPERT',
-    #  5: 'TECHNICAL',
-    #  6: "MASTER"
-    # }
-    #
     # live_info['member_category']:
     # {
     #  1: "μ's"
@@ -65,16 +48,23 @@ class LiveCalculator:
 
         # Add slider ending info
         if self.live_notes:
+            self.live_notes_count = len(self.live_notes)
             for note in self.live_notes:
+                # Multiply note['timing_sec'] by 1000 to make it a int
+                if note['effect'] in (1, 2, 3, 4):
+                    note['timing_sec'] = int(note['timing_sec'] * 1000)
                 # if this note is a slider
                 if note['effect'] == 3:
+                    note['effect_value'] = int(note['effect_value'] * 1000)
                     end_note = dict(note)
                     end_note['effect'] = 99
-                    end_note['timing_sec'] = note['timing_sec'] + note['effect_value'] + 0.001
+                    end_note['timing_sec'] = note['timing_sec'] + note['effect_value'] + 1
                     end_note['effect_value'] = note['timing_sec']
                     self.live_notes.append(end_note)
             # sort by key 'timing_sec'
             self.live_notes = sorted(self.live_notes, key=lambda d: d['timing_sec'])
+            self.live_notes_count_slider_twice = len(self.live_notes)
+            self.live_length = self.live_notes[-1]['timing_sec']
 
     @staticmethod
     def get_combo_factor(combo):
@@ -114,11 +104,10 @@ class LiveCalculator:
     # When reaching the max combo, next icon will be "miss"
     # 0 is default value and indicates full combo
     # When full combo, you will get only perfect and great
-    def calculate_expected_score(self, perfect_rate, max_combo=0):
-        returns = {}
+    def calculate_expected_score(self, perfect_rate, max_combo=0, score_up=0, skill_up=0, init_combo=0):
+        returns = dict()
         attribute_score = 0
         skill_score = 0
-        total_score = 0
 
         live_attribute_id = self.live_info['attribute_icon_id']
         live_category = self.live_info['member_category']
@@ -136,15 +125,23 @@ class LiveCalculator:
                     type_factor *= 1.1
             member['type_factor'] = type_factor
 
+        if skill_up:
+            for member in members:
+                skill_info = member['skill_info']
+                if skill_info:
+                    if skill_info['skill_effect_type'] == 11:
+                        skill_info['activation_rate'] *= 1.1
+
         basic_score = team_total_attribute * 0.0125
+        if score_up:
+            basic_score *= 1.1
         star_note_count = 0
         token_note_count = 0
         slider_note_count = 0
-        current_combo = 0
+        current_combo = init_combo
         total_note_count = 0
-        result_combo = 0
 
-        if max_combo == 0:
+        if not max_combo:
             for note in self.live_notes:
                 position = 9 - note['position']
                 type_factor = members[position]['type_factor']
@@ -183,6 +180,8 @@ class LiveCalculator:
                     total_note_count += 1.0
                     slider_note_count += 1.0
 
+            result_combo = current_combo
+            returns['result_combo'] = result_combo
             # A slider note has a start and a ending.
             # Only when twice is perfect, the perfect lock can be triggered,
             # in this way the total perfect rate would be a little smaller
@@ -224,17 +223,19 @@ class LiveCalculator:
                             skill_expected_score = math.floor(star_note_count / skill_info['trigger_value']) * \
                                                    skill_info['activation_rate'] / 100.0 * skill_info[
                                                        'effect_value']
+                        # 'trigger_type': 1 indicates time
+                        if skill_info['trigger_type'] == 1:
+                            skill_expected_score = math.floor(self.live_length / 1000 / skill_info['trigger_value']) * \
+                                                   skill_info['activation_rate'] / 100.0 * skill_info['effect_value']
 
                     skill_score += skill_expected_score
 
             total_score = attribute_score + skill_score
-            returns['total_score'] = total_score
             total_scoring_up_rate = 0
 
             # Burst scoring up cards expected scoring bonus (e.g. スコア15000達成ごとに13%の確率でスコアが1120増える)
             for member in members:
                 skill_info = member['skill_info']
-                total_scoring_up_rate = 0
                 if skill_info:
                     if skill_info['skill_effect_type'] == 11:
                         # 'trigger_type': 5 indicates score
@@ -243,29 +244,49 @@ class LiveCalculator:
                                               skill_info['activation_rate'] / 100.0
                             total_scoring_up_rate += scoring_up_rate
             total_score /= (1 - total_scoring_up_rate)
-            returns['total_score_burst'] = total_score
+            returns['total_score'] = total_score
             returns['slider_note_count'] = slider_note_count
-            print('raw score: {}, total_score: {}, slider_note_count: {}'.format(returns['total_score'], returns['total_score_burst'], returns['slider_note_count']))
+            print('Song: {}\nDifficulty: {}\nTeam total attribute: {}\nTotal expected score: {:.2f}\n'
+                  .format(self.live_info['name'], self.live_info['difficulty_text'],
+                          returns['team_total_attribute'], returns['total_score']))
             return returns
 
-    def calculate_timing_coverage(self):
-        pass
+    def calculate_score_distribution(self):
+        func_starting_time = time.time()
 
-    def calculate(self):
-        pass
+        ending_time = self.live_notes[-1]['timing_sec']
+        print(ending_time)
+        current_time = 0
+        next_note_index = 0
+        while current_time <= ending_time:
+            while self.live_notes[next_note_index]['timing_sec'] == current_time:
+                if next_note_index == self.live_notes_count_slider_twice - 1:
+                    break
+                next_note_index += 1
+                print(next_note_index)
+            current_time += 1
+
+        func_ending_time = time.time()
+        print(func_ending_time - func_starting_time)
 
 
 if __name__ == '__main__':
-    red_muse = Team(u"../data/team/紅[μ's].sd")
+    # Create team
+    smile_muse = Team(u"../data/team/紅[μ's].sd")
+    pure_muse = Team(u"../data/team/緑[μ's].sd")
     t = Team(u"../data/team/s.sd")
     red_guest = [[1, 9], [1, 6, 8]]
     # red_muse.add_guest(red_guest)
+
+    # Create LiveCalculator
     lc = LiveCalculator()
-    lc.set_live(563)
-    lc.set_team(red_muse)
-    lc.set_team(t)
-    lc.calculate_expected_score(0.95)
-    lc.team.show_members_info()
+    lc.set_live(234)    # にこぷり♥女子道 EXPERT
+    lc.set_live(171)
+    lc.set_team(pure_muse)
+    lc.calculate_expected_score(0.955, score_up=0, skill_up=0)
+    lc.calculate_expected_score(0.955, score_up=1, skill_up=1)
+    # lc.calculate_score_distribution()
+
 
 
 
