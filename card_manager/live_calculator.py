@@ -232,6 +232,7 @@ class LiveCalculator:
 
             total_score = attribute_score + skill_score
             total_scoring_up_rate = 0
+            returns['raw_score'] = total_score
 
             # Burst scoring up cards expected scoring bonus (e.g. スコア15000達成ごとに13%の確率でスコアが1120増える)
             for member in members:
@@ -246,9 +247,9 @@ class LiveCalculator:
             total_score /= (1 - total_scoring_up_rate)
             returns['total_score'] = total_score
             returns['slider_note_count'] = slider_note_count
-            print('Song: {}\nDifficulty: {}\nTeam total attribute: {}\nTotal expected score: {:.2f}\n'
+            print('Song: {}\nDifficulty: {}\nTeam total attribute: {}\nRaw score: {:.2f}\nTotal score: {:.2f}\n'
                   .format(self.live_info['name'], self.live_info['difficulty_text'],
-                          returns['team_total_attribute'], returns['total_score']))
+                          returns['team_total_attribute'], returns['raw_score'], returns['total_score']))
             return returns
 
     def calculate_score_distribution(self):
@@ -282,9 +283,9 @@ if __name__ == '__main__':
     lc = LiveCalculator()
     lc.set_live(234)    # にこぷり♥女子道 EXPERT
     lc.set_live(171)
-    lc.set_team(pure_muse)
+    lc.set_team(t)
     lc.calculate_expected_score(0.955, score_up=0, skill_up=0)
-    lc.calculate_expected_score(0.955, score_up=1, skill_up=1)
+    # lc.calculate_expected_score(0.955, score_up=1, skill_up=1)
     # lc.calculate_score_distribution()
 
 
