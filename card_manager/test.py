@@ -3,3 +3,5 @@
 
 from __future__ import print_function
 print('sss')
+import os
+print(os.getcwd())

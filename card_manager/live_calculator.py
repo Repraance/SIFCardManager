@@ -5,7 +5,17 @@ from __future__ import print_function
 import json
 import math
 import time
-from card_manager.team import Team
+import sys
+import os
+
+parent_path = os.path.dirname(sys.path[0])
+if parent_path not in sys.path:
+    sys.path.append(parent_path)
+
+try:
+    from card_manager.team import Team
+except:
+    raise
 
 
 class LiveCalculator:
@@ -272,6 +282,7 @@ class LiveCalculator:
 
 
 if __name__ == '__main__':
+    os.chdir(sys.path[0])
     # Create team
     smile_muse = Team(u"../data/team/紅[μ's].sd")
     pure_muse = Team(u"../data/team/緑[μ's].sd")
