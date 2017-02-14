@@ -26,6 +26,7 @@ class LiveCalculator:
         self.live_notes_count_slider_twice = 0
         self.live_length = 0
         self.team = None
+        self.perfect_rate = 0.9
         # load all lives info from maps.json
         with open(u'../data/maps/maps.json') as fp:
             self.all_lives_info = json.load(fp)
@@ -49,12 +50,16 @@ class LiveCalculator:
     def set_live(self, live_id):
         # Search for target live
         for live_info in self.all_lives_info:
-            if live_info['live_setting_id'] == live_id:
-                self.live_info = live_info
-                notes_json = live_info['notes_setting_asset']
-                with open(u'../data/maps/latest/' + notes_json) as fp:
-                    self.live_notes = json.load(fp)
-                break
+            if type(live_id) is int:
+                if live_info['live_setting_id'] == live_id:
+                    self.live_info = live_info
+                    notes_json = live_info['notes_setting_asset']
+                    with open(u'../data/maps/latest/' + notes_json) as fp:
+                        self.live_notes = json.load(fp)
+                    break
+            if type(live_id) is list:
+                for live in live_id:
+                    pass
 
         # Add slider ending info
         if self.live_notes:
@@ -110,14 +115,20 @@ class LiveCalculator:
     def calculate_team_strength(self):
         pass
 
+    def set_perfect_rate(self, pr):
+        self.perfect_rate = pr
+
     # max_combo means the max combo reached when you cannot full combo
     # When reaching the max combo, next icon will be "miss"
     # 0 is default value and indicates full combo
     # When full combo, you will get only perfect and great
-    def calculate_expected_score(self, perfect_rate, max_combo=0, score_up=0, skill_up=0, init_combo=0):
+    def calculate_expected_score(self, perfect_rate=None, max_combo=0, score_up=0, skill_up=0, init_combo=0):
         returns = dict()
         attribute_score = 0
         skill_score = 0
+
+        if not perfect_rate:
+            perfect_rate = self.perfect_rate
 
         live_attribute_id = self.live_info['attribute_icon_id']
         live_category = self.live_info['member_category']
@@ -279,6 +290,9 @@ class LiveCalculator:
 
         func_ending_time = time.time()
         print(func_ending_time - func_starting_time)
+
+    def calculate_medley(self, songs):
+        pass
 
 
 if __name__ == '__main__':
