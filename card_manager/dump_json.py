@@ -82,10 +82,11 @@ def get_unit_skill_m():
 
 
 def get_unit_skill_level_m():
-    unit_skill_level_m_field = ('unit_skill_id', 'name', 'skill_effect_type', 'discharge_type', 'trigger_type')
+    unit_skill_level_m_field = ('unit_skill_id', 'skill_level', 'description', 'effect_value', 'discharge_time',
+                                'trigger_value', 'activation_rate')
     unit_skill_level_m = list()
 
-    curs.execute('''SELECT unit_skill_id, description,
+    curs.execute('''SELECT unit_skill_id, skill_level, description,
                            effect_value, discharge_time, trigger_value, activation_rate
                     FROM unit_skill_level_m''')
     result = curs.fetchall()
