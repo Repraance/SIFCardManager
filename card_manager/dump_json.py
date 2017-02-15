@@ -36,10 +36,12 @@ def get_unit_type_member_tag_m():
 
 
 def get_unit_leader_skill_m():
-    unit_leader_skill_m_field = ('name', 'description', 'leader_skill_effect_type', 'effect_value')
+    unit_leader_skill_m_field = ('unit_leader_skill_id', 'name', 'description',
+                                 'leader_skill_effect_type', 'effect_value')
     unit_leader_skill_m = list()
 
-    curs.execute('SELECT name, description, leader_skill_effect_type, effect_value FROM unit_leader_skill_m')
+    curs.execute('''SELECT unit_leader_skill_id, name, description, leader_skill_effect_type, effect_value
+                    FROM unit_leader_skill_m''')
     result = curs.fetchall()
 
     for record in result:
@@ -50,10 +52,12 @@ def get_unit_leader_skill_m():
 
 
 def get_unit_leader_skill_extra_m():
-    unit_leader_skill_extra_m_field = ('member_tag_id', 'leader_skill_effect_type', 'effect_value')
+    unit_leader_skill_extra_m_field = ('unit_leader_skill_id', 'member_tag_id',
+                                       'leader_skill_effect_type', 'effect_value')
     unit_leader_skill_extra_m = list()
 
-    curs.execute('SELECT member_tag_id, leader_skill_effect_type, effect_value FROM unit_leader_skill_extra_m')
+    curs.execute('''SELECT unit_leader_skill_id,member_tag_id, leader_skill_effect_type, effect_value
+                    FROM unit_leader_skill_extra_m''')
     result = curs.fetchall()
 
     for record in result:
