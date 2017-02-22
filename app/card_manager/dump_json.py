@@ -97,6 +97,8 @@ def get_unit_skill_level_m():
     with open('../data/json/unit_skill_level_m.json', 'w') as fp:
         json.dump(unit_skill_level_m, fp)
 
+    print(unit_skill_level_m)
+
 if __name__ == '__main__':
     conn = sqlite3.connect('../data/db/unit.db_')
     curs = conn.cursor()

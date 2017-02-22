@@ -1,0 +1,109 @@
+.jumbotron {
+    background-color: #ECEFF1;
+}
+
+#selectSongText {
+    margin-bottom: 15px;
+}
+
+.divBorder {
+    border-style: solid;
+    border-color: #ddd;
+}
+
+body {
+    font-family: Microsoft Yahei UI, 微软雅黑, Meiryo;
+}
+
+img {
+    max-width: 80px;
+}
+
+hr {
+    margin: 5px!important;
+}
+
+th,
+td {
+    text-align: center;
+    vertical-align: middle!important;
+    border-top: none !important;
+}
+
+td {
+    padding: 2px!important;
+}
+
+table {
+    margin-bottom: 0px!important;
+}
+
+
+/*ref: http://blog.karenmenezes.com/2014/nov/1/another-pure-css-checkbox-article/*/
+
+.checkbox-custom,
+.radio-custom {
+    opacity: 0;
+    position: absolute;
+}
+
+.checkbox-custom,
+.checkbox-custom-label,
+.radio-custom,
+.radio-custom-label {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.checkbox-custom-label,
+.radio-custom-label {
+    position: relative;
+}
+
+.checkbox-custom+.checkbox-custom-label:before,
+.radio-custom+.radio-custom-label:before {
+    content: '';
+    background: #fff;
+    border: 4px solid #bbb;
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    padding: 1px;
+    margin-right: 5px;
+    text-align: center;
+    border-radius: 30%;
+}
+
+.checkbox-custom:checked+.checkbox-custom-label:before {
+    background: #333;
+    box-shadow: inset 0px 0px 0px 0px #fff;
+    border: 4px solid #bbb;
+}
+
+.checkbox-custom:disabled+.checkbox-custom-label:before,
+.radio-custom:disabled+.radio-custom-label:before,
+.checkbox-custom:disabled+.checkbox-custom-label,
+.radio-custom:disabled+.radio-custom-label {
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+.radio-custom+.radio-custom-label:before,
+.radio-custom:disabled+.radio-custom-label:before {
+    border-radius: 50%;
+}
+
+.radio-custom:checked+.radio-custom-label:before {
+    background: #333;
+    box-shadow: inset 0px 0px 0px 0px #fff;
+    border: 4px solid #bbb;
+}
+
+.checkbox-custom:focus+.checkbox-custom-label,
+.radio-custom:focus+.radio-custom-label {
+    /*outline: 1px solid #ddd;*/
+    /* focus style */
+}

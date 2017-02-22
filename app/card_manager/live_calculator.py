@@ -156,6 +156,7 @@ class LiveCalculator:
         basic_score = team_total_attribute * 0.0125
         if score_up:
             basic_score *= 1.1
+
         star_note_count = 0
         token_note_count = 0
         slider_note_count = 0
@@ -230,8 +231,7 @@ class LiveCalculator:
                         # 'trigger_type': 4 indicates combo
                         if skill_info['trigger_type'] == 4:
                             skill_expected_score = math.floor(total_note_count / skill_info['trigger_value']) * \
-                                                   skill_info['activation_rate'] / 100.0 * skill_info[
-                                                       'effect_value']
+                                                   skill_info['activation_rate'] / 100.0 * skill_info['effect_value']
 
                         # 'trigger_type': 6 indicates Perfect
                         if skill_info['trigger_type'] == 6:
@@ -250,6 +250,7 @@ class LiveCalculator:
                                                    skill_info['activation_rate'] / 100.0 * skill_info['effect_value']
 
                     skill_score += skill_expected_score
+                    print(skill_expected_score)
 
             total_score = attribute_score + skill_score
             total_scoring_up_rate = 0
@@ -271,6 +272,8 @@ class LiveCalculator:
             print('Song: {}\nDifficulty: {}\nTeam total attribute: {}\nRaw score: {:.2f}\nTotal score: {:.2f}\n'
                   .format(self.live_info['name'], self.live_info['difficulty_text'],
                           returns['team_total_attribute'], returns['raw_score'], returns['total_score']))
+            print(attribute_score)
+            print(skill_score)
             return returns
 
     def calculate_score_distribution(self):
@@ -306,10 +309,10 @@ if __name__ == '__main__':
 
     # Create LiveCalculator
     lc = LiveCalculator()
-    lc.set_live(234)    # にこぷり♥女子道 EXPERT
-    lc.set_live(171)
-    lc.set_team(t)
-    lc.calculate_expected_score(0.955, score_up=0, skill_up=0)
+    # lc.set_live(234)    # にこぷり♥女子道 EXPERT
+    lc.set_live(64)
+    lc.set_team(smile_muse)
+    lc.calculate_expected_score(0.9, score_up=0, skill_up=0)
     # lc.calculate_expected_score(0.955, score_up=1, skill_up=1)
     # lc.calculate_score_distribution()
 

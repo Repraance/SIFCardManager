@@ -1,19 +1,15 @@
 
 /.open
 /.idea/
-/Archive/
-/assets/backup/
-/assets/frame/
-/assets/full/
-/assets/unit/
-/card_manager/note.txt
-/data/db-original/
 /.vscode/
-/assets/SIFStatic/unit/
-/test/1.png
-/test/4.png
-/test/5.png
-/assets/Fromieb/
 *.ipynb
 .ipynb_checkpoints
 __pycache__/
+/app/static/imgs/icon
+/app/data/maps
+/app/data/test
+/app/card_manager/note.txt
+/Archive
+/app/card_manager/__pycache__
+/app/data/note.txt
+/app/data/README.md
