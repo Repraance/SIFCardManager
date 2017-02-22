@@ -6,10 +6,11 @@
 .ipynb_checkpoints
 __pycache__/
 /app/static/imgs/icon
-/app/data/maps
 /app/data/test
 /app/card_manager/note.txt
 /Archive
 /app/card_manager/__pycache__
 /app/data/note.txt
 /app/data/README.md
+/app/data/note2.txt
+/app/data/maps/archive/
