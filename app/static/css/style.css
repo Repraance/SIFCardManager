@@ -1,14 +1,27 @@
 .jumbotron {
-    background-color: #ECEFF1;
+    background-color: #FAFAFA;
 }
 
 #selectSongText {
     margin-bottom: 15px;
 }
 
+.well {
+    background-color: #fff;
+}
+
 .divBorder {
     border-style: solid;
     border-color: #ddd;
+}
+
+.well-5 {
+    margin-bottom: 5px;
+}
+
+.margin-lr {
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 body {

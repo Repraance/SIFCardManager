@@ -124,7 +124,7 @@
                             <table class="table" style="margin-top: 10px">
                                 <caption>
                                     <div class="form-inline text-right">
-                                        <p style="float: left; margin-left: 10px; margin-right: 10px">Team info</p>
+                                        <p style="float: left; margin-left: 10px; margin-right: 10px"><b>Team info</b></p>
                                         <input id="openFile" type="file" class="filestyle" accept=".sd">
                                         <button class="btn btn-default" onclick="loadFile()">Load file</button>
                                     </div>
@@ -200,7 +200,7 @@
 
                             <button type="button" class="btn btn-large btn-block btn-primary" onclick="calculate()">Calculate</button>
                         </div>
-                        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#cardListModal">Choose card</button>
 
                         <div class="well well-sm">
                             <p id="result">result</p>
@@ -280,213 +280,188 @@
             <!-- container -->
         </div>
         <!-- jumbotron -->
+
+
         <!-- 模态框（Modal） -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="cardListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="myModalLabel">Choose Card</h4>
-
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="padding: 8px">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <div class="well well-sm">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                                <div class="row" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; padding-right: 0px">
+                                        <div class="well well-sm" style="margin-bottom: 8px; margin-right: 4px">
+                                            <div>
+
+                                                <input id="cardMuse" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardMuse" class="checkbox-custom-label">μ's</label>
+                                            </div>
+                                            <hr>
+                                            <div>
+                                                <input id="cardPrintemps" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardPrintemps" class="checkbox-custom-label">Printemps</label>
+                                            </div>
+                                            <div>
+                                                <input id="cardlilywhite" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardlilywhite" class="checkbox-custom-label">lilywhite</label>
+                                            </div>
+                                            <div>
+                                                <input id="cardBiBi" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardBiBi" class="checkbox-custom-label">BiBi</label>
+                                            </div>
+                                            <hr>
+                                            <div>
+                                                <input id="cardHonoka" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardHonoka" class="checkbox-custom-label"><span style="color: orange">高坂穂乃果</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardEli" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardEli" class="checkbox-custom-label"><span style="color: aqua">絢瀬絵里</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardKotori" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardKotori" class="checkbox-custom-label"><span style="color: silver">南小鳥</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardUmi" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardUmi" class="checkbox-custom-label"><span style="color: blue">園田海未</span></label>
+                                            </div>
+
+
+                                            <div>
+                                                <input id="cardRin" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardRin" class="checkbox-custom-label"><span style="color: yellow">星空凛</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardMaki" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardMaki" class="checkbox-custom-label"><span style="color: red">西木野真姫</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardNozomi" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardNozomi" class="checkbox-custom-label"><span style="color: purple">東条希</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardHanayo" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardHanayo" class="checkbox-custom-label"><span style="color: green">小泉花陽</span></label>
+                                            </div>
+
+                                            <div>
+
+                                                <input id="cardNico" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardNico" class="checkbox-custom-label"><span style="color: pink">矢澤にこ</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; padding-right: 0px">
+                                        <div class="well well-sm" style="margin-bottom: 8px; margin-left: 4px">
+                                            <div>
+                                                <input id="cardAqours" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardAqours" class="checkbox-custom-label">Aqours</label>
+                                            </div>
+                                            <hr>
+                                            <div>
+                                                <input id="cardCYaRon" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardCYaRon" class="checkbox-custom-label">CYaRon</label>
+                                            </div>
+                                            <div>
+                                                <input id="cardAZALEA" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardAZALEA" class="checkbox-custom-label">AZALEA</label>
+                                            </div>
+                                            <div>
+                                                <input id="cardGuiltyKiss" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardGuiltyKiss" class="checkbox-custom-label">Guilty Kiss</label>
+                                            </div>
+                                            <hr>
+                                            <div>
+                                                <input id="cardChika" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardChika" class="checkbox-custom-label"><span style="color: #f08300">高海千歌</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardRiko" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardRiko" class="checkbox-custom-label"><span style="color: #ff9999">桜内梨子</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardKanan" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardKanan" class="checkbox-custom-label"><span style="color: #229977">松浦果南</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardDia" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardDia" class="checkbox-custom-label"><span style="color: #ff4a4a">黒澤ダイヤ</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardYou" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardYou" class="checkbox-custom-label"><span style="color: #44aaff">渡辺曜</span></label>
+                                            </div>
+
+                                            <div>
+                                                <input id="cardYoshiko" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardYoshiko" class="checkbox-custom-label"><span style="color: #7a7a7a">津島善子</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardHanamaru" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardHanamaru" class="checkbox-custom-label"><span style="color: #dbb623">国木田花丸</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardRuby" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardRuby" class="checkbox-custom-label"><span style="color: #ff5599">黒澤ルビィ</span></label>
+                                            </div>
+
+                                            <div>
+                                                <input id="cardMari" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <label for="cardMari" class="checkbox-custom-label"><span style="color: #d47aff">小原鞠莉</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 0px; margin-right: 0px">
+                                    <div class="well well-sm well-5">
+
+                                        <input id="card1stYear" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                        <label for="card1stYear" class="checkbox-custom-label">1st Year</label>
+
+                                        <input id="card2ndYear" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                        <label for="card2ndYear" class="checkbox-custom-label">2nd Year</label>
+
+                                        <input id="card3rdYear" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                        <label for="card3rdYear" class="checkbox-custom-label">3rd Year</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+
+                                <div class="well well-sm well-10">
                                     <h4>Rarity</h4>
-                                    <input id="cardN" class="checkbox-custom" type="checkbox" checked onclick="">
+                                    <input id="cardN" class="checkbox-custom" type="checkbox" onclick="">
                                     <label for="cardN" class="checkbox-custom-label">N</label>
-                                    <input id="cardR" class="checkbox-custom" type="checkbox" checked onclick="">
+                                    <input id="cardR" class="checkbox-custom" type="checkbox" onclick="">
                                     <label for="cardR" class="checkbox-custom-label">R</label>
-                                    <input id="cardSR" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
+                                    <input id="cardSR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
                                     <label for="cardSR" class="checkbox-custom-label">SR</label>
-                                    <input id="cardSSR" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
+                                    <input id="cardSSR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
                                     <label for="cardSSR" class="checkbox-custom-label">SSR</label>
-                                    <input id="cardUR" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
+                                    <input id="cardUR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
                                     <label for="cardUR" class="checkbox-custom-label">UR</label>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="well well-sm">
+                                <div class="well well-sm well-10">
                                     <h4>Attribute</h4>
-                                    <input id="cardSmile" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
+                                    <input id="cardSmile" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
                                     <label for="cardSmile" class="checkbox-custom-label"><span style="color: #E91E63">Smile</span></label>
 
-                                    <input id="cardPure" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
+                                    <input id="cardPure" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
                                     <label for="cardPure" class="checkbox-custom-label"><span style="color: #4CAF50">Pure</span></label>
 
-                                    <input id="cardCool" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
+                                    <input id="cardCool" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
                                     <label for="cardCool" class="checkbox-custom-label"><span style="color: #2196F3">Cool</span></label>
                                 </div>
+
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                <div class="well well-sm">
-                                    <table class="table">
-                                        <caption class="text-center">
-                                            <input id="cardMuse" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                            <label for="cardMuse" class="checkbox-custom-label">μ's</label>
-
-                                        </caption>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <input id="cardPrintemps" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardPrintemps" class="checkbox-custom-label">Printemps</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardlilywhite" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardlilywhite" class="checkbox-custom-label">lilywhite</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardBiBi" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardBiBi" class="checkbox-custom-label">BiBi</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input id="cardHonoka" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardHonoka" class="checkbox-custom-label">高坂穂乃果</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardUmi" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardUmi" class="checkbox-custom-label">園田海未</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardEli" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardEli" class="checkbox-custom-label">絢瀬絵里</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input id="cardKotori" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardKotori" class="checkbox-custom-label">南小鳥</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardRin" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardRin" class="checkbox-custom-label">星空凛</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardMaki" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardMaki" class="checkbox-custom-label">西木野真姫</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input id="cardHanayo" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardHanayo" class="checkbox-custom-label">小泉花陽</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardNozomi" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardNozomi" class="checkbox-custom-label">東条希</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardNico" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardNico" class="checkbox-custom-label">矢澤にこ</label>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <hr>
-                                    <table class="table">
-                                        <caption class="text-center">
-                                            <input id="cardAqours" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                            <label for="cardAqours" class="checkbox-custom-label">Aqours</label>
-                                        </caption>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <input id="cardCYaRon" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardCYaRon" class="checkbox-custom-label">CYaRon</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardAZALEA" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardAZALEA" class="checkbox-custom-label">AZALEA</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardGuiltyKiss" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardGuiltyKiss" class="checkbox-custom-label">Guilty Kiss</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input id="cardChika" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardChika" class="checkbox-custom-label">高海千歌</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardKanan" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardKanan" class="checkbox-custom-label">松浦果南</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardRiko" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardRiko" class="checkbox-custom-label">桜内梨子</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input id="cardYou" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardYou" class="checkbox-custom-label">渡辺曜</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardDia" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardDia" class="checkbox-custom-label">黒澤ダイヤ</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardYoshiko" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardYoshiko" class="checkbox-custom-label">津島善子</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input id="cardRuby" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardRuby" class="checkbox-custom-label">黒澤ルビィ</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardHanamaru" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardHanamaru" class="checkbox-custom-label">国木田花丸</label>
-                                                </td>
-                                                <td>
-                                                    <input id="cardMari" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                                                    <label for="cardMari" class="checkbox-custom-label">小原鞠莉</label>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                <div class="well well-sm">
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-                        <input id="card1stYear" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                        <label for="card1stYear" class="checkbox-custom-label">1st Year</label>
-                        <input id="card2ndYear" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                        <label for="card2ndYear" class="checkbox-custom-label">2nd Year</label>
-                        <input id="card3rdYear" class="checkbox-custom" type="checkbox" checked onclick="updateLiveLists()">
-                        <label for="card3rdYear" class="checkbox-custom-label">3rd Year</label>
-
-
-
-
-
-
-
 
                     </div>
                     <div class="modal-footer">

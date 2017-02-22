@@ -7,7 +7,6 @@
 __pycache__/
 /app/static/imgs/icon
 /app/data/test
-/app/card_manager/note.txt
 /Archive
 /app/card_manager/__pycache__
 /app/data/note.txt

@@ -1,0 +1,3 @@
+[submodule "app/static/image"]
+	path = app/static/image
+	url = https://github.com/iebb/SIFStatic.git
