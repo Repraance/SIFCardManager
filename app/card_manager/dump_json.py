@@ -47,6 +47,10 @@ def get_unit_leader_skill_m():
     for record in result:
         unit_leader_skill_m.append(OrderedDict(zip(unit_leader_skill_m_field, record)))
 
+    for skill in unit_leader_skill_m:
+        if skill['leader_skill_effect_type'] > 3:
+            skill['leader_skill_effect_type'] = int(skill['leader_skill_effect_type'] / 10) % 10
+
     with open('../data/json/unit_leader_skill_m.json', 'w') as fp:
         json.dump(unit_leader_skill_m, fp)
 

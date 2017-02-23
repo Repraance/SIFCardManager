@@ -10,9 +10,12 @@
     background-color: #fff;
 }
 
-.divBorder {
-    border-style: solid;
-    border-color: #ddd;
+label {
+    font-weight: 500;
+}
+
+.shadowed-text {
+    text-shadow: 0px 0px 1px black;
 }
 
 .well-5 {

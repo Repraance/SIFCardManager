@@ -4,7 +4,12 @@
 from collections import OrderedDict
 import sqlite3
 import json
+import os 
+import sys
 
+parent_path = os.path.dirname(sys.path[0])
+if parent_path not in sys.path:
+    sys.path.append(parent_path)
 
 live_setting_m_field = ('live_setting_id', 'live_track_id',
                         'name', 'name_kana', 'title_asset', 'member_category', 'member_tag_id',
@@ -24,7 +29,7 @@ sql_live_setting_m = '''
     WHERE live_setting_m.live_track_id = live_track_m.live_track_id
 '''
 
-
+os.chdir(sys.path[0])
 live_setting = list()
 conn = sqlite3.connect('../data/db/live.db_')
 curs = conn.cursor()
