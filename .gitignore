@@ -13,3 +13,4 @@ __pycache__/
 /app/data/README.md
 /app/data/note2.txt
 /app/data/maps/archive/
+/debug.log

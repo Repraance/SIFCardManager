@@ -11,8 +11,6 @@ $(document).ready(function() {
 
 })
 
-var mapsJson;
-var unit_m;
 var liveList = new Array();
 var teamInfo;
 var colorIndex = {
@@ -27,16 +25,27 @@ var attributeIndex = {
     3: 'cool'
 }
 
-var unit_leader_skill_extra_m_url = 'https://raw.githubusercontent.com/Repraance/SIFCardManager/master/data/json/unit_leader_skill_extra_m.json';
-var unit_leader_skill_m_url = 'https://raw.githubusercontent.com/Repraance/SIFCardManager/master/data/json/unit_leader_skill_m.json';
-var unit_m_url = 'https://raw.githubusercontent.com/Repraance/SIFCardManager/master/data/json/unit_m.json';
-var unit_skill_level_m_url = 'https://raw.githubusercontent.com/Repraance/SIFCardManager/master/data/json/unit_skill_level_m.json';
-var unit_skill_m_url = 'https://raw.githubusercontent.com/Repraance/SIFCardManager/master/data/json/unit_skill_m.json';
-var unit_type_member_tag_m_url = 'https://raw.githubusercontent.com/Repraance/SIFCardManager/master/data/json/unit_type_member_tag_m.json';
+var rarityIndex = {
+    1: 'N',
+    2: 'R',
+    3: 'SR',
+    4: 'SSR',
+    5: 'UR'
+}
+
+var live_setting_url = 'static/maps/live_setting.json'
+
+var unit_leader_skill_extra_m_url = 'static/json/unit_leader_skill_extra_m.json';
+var unit_leader_skill_m_url = 'static/json/unit_leader_skill_m.json';
+var unit_m_url = 'static/json/unit_m.json';
+var unit_skill_level_m_url = 'static/json/unit_skill_level_m.json';
+var unit_skill_m_url = 'static/json/unit_skill_m.json';
+var unit_type_member_tag_m_url = 'static/json/unit_type_member_tag_m.json';
+var unit_url = 'static/json/unit.json';
 
 function loadMapsJSON() {
     $.ajaxSettings.async = false;
-    $.getJSON('https://raw.githubusercontent.com/iebb/SIFMaps/master/maps.min.json',
+    $.getJSON(live_setting_url,
         function(json) {
             mapsJson = json;
         })
@@ -44,35 +53,33 @@ function loadMapsJSON() {
 
 function loadJSONs() {
     $.ajaxSettings.async = true;
-    $.getJSON(unit_leader_skill_extra_m_url,
-        function(json) {
-            unit_leader_skill_extra_m = json;
-        })
+    $.getJSON(unit_leader_skill_extra_m_url, function(json) {
+        unit_leader_skill_extra_m = json;
+    })
 
-    $.getJSON(unit_leader_skill_m_url,
-        function(json) {
-            unit_leader_skill_m = json;
-        })
+    $.getJSON(unit_leader_skill_m_url, function(json) {
+        unit_leader_skill_m = json;
+    })
 
-    $.getJSON(unit_m_url,
-        function(json) {
-            unit_m = json;
-        })
+    $.getJSON(unit_m_url, function(json) {
+        unit_m = json;
+    })
 
-    $.getJSON(unit_skill_level_m_url,
-        function(json) {
-            unit_skill_level_m = json;
-        })
+    $.getJSON(unit_skill_level_m_url, function(json) {
+        unit_skill_level_m = json;
+    })
 
-    $.getJSON(unit_skill_m_url,
-        function(json) {
-            unit_skill_m = json;
-        })
+    $.getJSON(unit_skill_m_url, function(json) {
+        unit_skill_m = json;
+    })
 
-    $.getJSON(unit_type_member_tag_m_url,
-        function(json) {
-            unit_type_member_tag_m = json;
-        })
+    $.getJSON(unit_type_member_tag_m_url, function(json) {
+        unit_type_member_tag_m = json;
+    })
+
+    $.getJSON(unit_url, function(json) {
+        unit = json;
+    })
 }
 
 
@@ -186,7 +193,7 @@ function setTeamInfo() {
 }
 
 function displayTeam() {
-    var cardList = $('#cardList img');
+    var unitList = $('#unitList img');
     for (var i = 0; i < 9; i++) {
         let url = 'static/image/card/icon/';
         if (teamInfo[i].mezame) {
@@ -195,7 +202,7 @@ function displayTeam() {
             url += 'normal/';
         }
         url += String(teamInfo[i].cardid) + '.png';
-        cardList.eq(i).attr('src', url);
+        unitList.eq(i).attr('src', url);
     }
 
 
@@ -350,7 +357,7 @@ function getLiveById(liveId) {
         if (mapsJson[i].live_setting_id == liveId) {
             liveInfo = mapsJson[i];
             $.ajaxSettings.async = false;
-            $.getJSON('https://raw.githubusercontent.com/iebb/SIFMaps/master/latest/' + liveInfo.notes_setting_asset,
+            $.getJSON('static/maps/latest/' + liveInfo.notes_setting_asset,
                 function(json) {
                     liveNotes = json;
                 })

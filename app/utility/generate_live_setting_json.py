@@ -4,7 +4,7 @@
 from collections import OrderedDict
 import sqlite3
 import json
-import os 
+import os
 import sys
 
 parent_path = os.path.dirname(sys.path[0])
@@ -29,18 +29,27 @@ sql_live_setting_m = '''
     WHERE live_setting_m.live_track_id = live_track_m.live_track_id
 '''
 
-os.chdir(sys.path[0])
-live_setting = list()
-conn = sqlite3.connect('../data/db/live.db_')
-curs = conn.cursor()
+difficulty_index = {
+    1: 'EASY',
+    2: 'NORMAL',
+    3: 'HARD',
+    4: 'EXPERT',
+    5: 'TECHNICAL',
+    6: 'MASTER'
+}
 
-curs.execute(sql_live_setting_m)
-result = curs.fetchall()
-for record in result:
-    live_setting.append(OrderedDict(zip(live_setting_m_field, record)))
+if __name__ == '__main__':
+    live_setting = list()
+    conn = sqlite3.connect('../data/db/live.db_')
+    curs = conn.cursor()
 
-for live in live_setting:
-    print(live)
+    curs.execute(sql_live_setting_m)
+    result = curs.fetchall()
+    for record in result:
+        live_setting.append(OrderedDict(zip(live_setting_m_field, record)))
 
-with open('../data/maps/live_setting.json', 'w') as fp:
-    json.dump(live_setting, fp)
+    for live in live_setting:
+        live['difficulty_text'] = difficulty_index[live['difficulty']]
+
+    with open('../static/maps/live_setting.json', 'w') as fp:
+        json.dump(live_setting, fp)

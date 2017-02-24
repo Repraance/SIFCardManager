@@ -30,12 +30,13 @@ function calculate() {
     var perfectRate = $('#perfectRate').val();
     console.log('perfectRate', parseFloat(perfectRate));
     var score = calculateExpectedScore(liveInfo, perfectRate);
+    $('#result').html('Expected score: ' + score);
     //$.get('/a', function(result) {
     //    $('#result').html(result);
     //});
-    $.post('/post', { data: JSON.stringify(teamInfo) }, function(result) {
-        $('#result').html(result);
-    });
+    //$.post('/post', { data: JSON.stringify(teamInfo) }, function(result) {
+    //    $('#result').html(result);
+    //});
 }
 
 function calculateExpectedScore(liveInfo, perfectRate, maxCombo = 0, scoreUp = false, skillUp = false) {
@@ -199,7 +200,7 @@ function calculateExpectedScore(liveInfo, perfectRate, maxCombo = 0, scoreUp = f
         }
     }
     totalScore /= (1 - totalScoringUpRate);
-    return totalScore;
+    return totalScore.toFixed(2);
 }
 
 

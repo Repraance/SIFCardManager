@@ -13,7 +13,6 @@
         <script src="static/js/bootstrap-filestyle.min.js"></script>
 
         <script src="static/js/main.js"></script>
-        <script src="static/js/liveList.js"></script>
         <script src="static/js/calculate.js"></script>
         <script src="static/js/cardList.js"></script>
         <script src="static/js/team.js"></script>
@@ -26,12 +25,6 @@
                 <nav class="navbar navbar-default navbar-static-top" style="background-color: #fff" role="navigation">
                     <a class="navbar-brand" href="#"><span class="text-center">スクフェス Live Calculator</span></a>
                 </nav>
-                <div class="row" id="selectSongText">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <h2 class="text-center">Choose Live</h2>
-                    </div>
-                </div>
-
                 <div class="row">
 
 
@@ -81,17 +74,6 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding-bottom: 0px">
                         <div class="well well-sm">
-                            <input id="live1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                            <label for="live1" class="checkbox-custom-label">First Live</label>
-                            <select name="live" id="liveList1" class="form-control" required="required" onchange="changeSelectColors()"></select>
-
-                            <input id="live2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                            <label for="live2" class="checkbox-custom-label">First Live</label>
-                            <select name="live" id="liveList1" class="form-control" required="required" onchange="changeSelectColors()"></select>
-
-                            <input id="live2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                            <label for="live2" class="checkbox-custom-label">First Live</label>
-                            <select name="live" id="liveList1" class="form-control" required="required" onchange="changeSelectColors()"></select>
 
 
                             <div style="margin-bottom: 10px" id="liveListList">
@@ -162,7 +144,7 @@
 
                                     </tr>
 
-                                    <tr id="cardList">
+                                    <tr id="unitList">
                                         <th>Avatar</th>
                                         <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
                                         <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
@@ -217,11 +199,12 @@
 
                             <button type="button" class="btn btn-large btn-block btn-primary" onclick="calculate()">Calculate</button>
                         </div>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#cardListModal">Choose card</button>
-                        <button class="btn btn-primary" onclick="updateCardList()">111</button>
-
+                        <div style="margin-bottom: 10px">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#cardListModal">Choose card</button>
+                            <button class="btn btn-primary" onclick="updateCardList()">111</button>
+                        </div>
                         <div class="well well-sm">
-                            <p id="result">result</p>
+                            <p><b id="result">Expected score: </b></p>
                         </div>
                     </div>
 
@@ -308,12 +291,12 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="myModalLabel">Choose Card</h4>
                     </div>
-                    <div class="modal-body" style="padding: 8px">
+                    <div class="modal-body" style="padding: 6px 3px 3px 6px">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                                 <div class="row" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px">
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; padding-right: 0px">
-                                        <div class="well well-sm" style="margin-bottom: 8px; margin-right: 4px">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; padding-right: 0px">
+                                        <div class="well well-sm" style="margin-bottom: 8px; margin-left: 3px; margin-right: 3px">
                                             <div>
 
                                                 <input id="cardMuse" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
@@ -377,8 +360,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; padding-right: 0px">
-                                        <div class="well well-sm" style="margin-bottom: 8px; margin-left: 4px">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; padding-right: 0px">
+                                        <div class="well well-sm" style="margin-bottom: 8px; margin-left: 3px; margin-right: 3px">
                                             <div>
                                                 <input id="cardAqours" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
                                                 <label for="cardAqours" class="checkbox-custom-label">Aqours</label>
@@ -439,8 +422,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-left: 0px; margin-right: 0px">
-                                    <div class="well well-sm well-5">
+                                <div class="row" style="margin-left: 0px; margin-right: 0px;">
+                                    <div class="well well-sm no-margin-bottom">
 
                                         <input id="card1stYear" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
                                         <label for="card1stYear" class="checkbox-custom-label">1st Year</label>
@@ -454,37 +437,51 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 
                                 <div class="well well-sm well-10">
-                                    <h4>Rarity</h4>
-                                    <input id="cardN" class="checkbox-custom" type="checkbox" onclick="">
-                                    <label for="cardN" class="checkbox-custom-label">N</label>
-                                    <input id="cardR" class="checkbox-custom" type="checkbox" onclick="">
-                                    <label for="cardR" class="checkbox-custom-label">R</label>
-                                    <input id="cardSR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                    <label for="cardSR" class="checkbox-custom-label">SR</label>
-                                    <input id="cardSSR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                    <label for="cardSSR" class="checkbox-custom-label">SSR</label>
-                                    <input id="cardUR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                    <label for="cardUR" class="checkbox-custom-label">UR</label>
+                                    <div style="display: inline">
+                                        <input id="cardN" class="checkbox-custom" type="checkbox" onclick="">
+                                        <label for="cardN" class="checkbox-custom-label">N</label>
+                                        <input id="cardR" class="checkbox-custom" type="checkbox" onclick="">
+                                        <label for="cardR" class="checkbox-custom-label">R</label>
+                                        <input id="cardSR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                        <label for="cardSR" class="checkbox-custom-label">SR</label>
+                                        <input id="cardSSR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                        <label for="cardSSR" class="checkbox-custom-label">SSR</label>
+                                        <input id="cardUR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                        <label for="cardUR" class="checkbox-custom-label">UR</label>
+                                    </div>
+                                    <div style="display: inline">
+                                        <input id="cardSmile" class="checkbox-custom" type="checkbox" onclick="updateCardList()">
+                                        <label for="cardSmile" class="checkbox-custom-label"><span style="color: #E91E63">Smile</span></label>
+
+                                        <input id="cardPure" class="checkbox-custom" type="checkbox" onclick="updateCardList()">
+                                        <label for="cardPure" class="checkbox-custom-label"><span style="color: #4CAF50">Pure</span></label>
+
+                                        <input id="cardCool" class="checkbox-custom" type="checkbox" onclick="updateCardList()">
+                                        <label for="cardCool" class="checkbox-custom-label"><span style="color: #2196F3">Cool</span></label>
+                                    </div>
                                 </div>
-                                <div class="well well-sm well-10">
-                                    <h4>Attribute</h4>
-                                    <input id="cardSmile" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                    <label for="cardSmile" class="checkbox-custom-label"><span style="color: #E91E63">Smile</span></label>
-
-                                    <input id="cardPure" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                    <label for="cardPure" class="checkbox-custom-label"><span style="color: #4CAF50">Pure</span></label>
-
-                                    <input id="cardCool" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                    <label for="cardCool" class="checkbox-custom-label"><span style="color: #2196F3">Cool</span></label>
+                                <div>
+                                    <select name="cardList" id="cardList" class="form-control" required="required"></select>
                                 </div>
 
+                                <div class="well well-sm">
+                                    <div class="row" style="margin-left: 0px;margin-right: 0px; overflow: scroll">
+
+                                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 img-col">
+                                            <img src="static/image/placeHolder.png" class="img-responsive" draggable="true">
+                                            <div style="text-align: center; border: 3px solid #000; white-space: nowrap">
+                                                card name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
                         <button type="button" class="btn btn-primary">Save</button>
