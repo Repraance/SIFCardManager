@@ -117,5 +117,5 @@ for live in unit:
     # print(live)
 print(len(unit))
 
-with open('../data/json/unit.json', 'w') as fp:
+with open('../static/json/unit.json', 'w') as fp:
     json.dump(unit, fp)

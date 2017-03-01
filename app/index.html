@@ -26,7 +26,35 @@
                     <a class="navbar-brand" href="#"><span class="text-center">スクフェス Live Calculator</span></a>
                 </nav>
                 <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding-bottom: 0px">
+                        <div class="well well-sm">
 
+
+                            <div style="margin-bottom: 10px">
+                                <input id="live1" class="checkbox-custom" type="checkbox" checked readonly="readonly" onclick="return false;">
+                                <label for="live1" class="checkbox-custom-label"><span style="font-size: 20px">First Live</span></label>
+                                <select name="live" id="liveList1" class="form-control" required="required" onchange="changeSelectColors()"></select>
+                            </div>
+                            <div style="margin-bottom: 10px">
+                                <input id="live2" class="checkbox-custom" type="checkbox">
+                                <label for="live2" class="checkbox-custom-label"><span style="font-size: 20px">Second Live</span></label>
+                                <select name="live" id="liveList2" class="form-control" required="required" onchange="changeSelectColors()"></select>
+                            </div>
+                            <div style="margin-bottom: 10px">
+                                <input id="live3" class="checkbox-custom" type="checkbox">
+                                <label for="live3" class="checkbox-custom-label"><span style="font-size: 20px">Third Live</span></label>
+                                <select name="live" id="liveList3" class="form-control" required="required" onchange="changeSelectColors()"></select>
+                            </div>
+
+                            <div class="form-group form-inline" style="margin-bottom: 0px">
+                                <div style="display: inline">
+                                    <b style="margin-left: 5px">Perfect rate:</b>
+                                    <input type="number" style="max-width: 100px" class="form-control" id="perfectRate" min="0" value="0.9" max="1" step="0.01">
+                                    <b style="margin-left: 5px; margin-right: 15px">Total combo: <span id="totalCombo" style="white-space:pre"></span></b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="well well-sm" style="padding-top: 0px; padding-bottom: 0px;">
@@ -108,9 +136,6 @@
                                     </button>
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -145,7 +170,7 @@
                                     </tr>
 
                                     <tr id="unitList">
-                                        <th>Avatar</th>
+                                        <th>Avatar<br><span style="font-weight: normal;font-size: 10px">Click to <br>select or <br>change card</span></th>
                                         <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
                                         <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
                                         <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
@@ -192,6 +217,292 @@
                                         <td><input type="text" class="form-control" size="1"></td>
                                         <td><input type="text" class="form-control" size="1"></td>
                                     </tr>
+                                    <tr>
+                                        <th>Skill Lv</th>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Kiss</th>
+                                        <td>
+                                            <input id="kiss0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss0" class="checkbox-custom-label">200</label>
+                                        </td>
+                                        <td>
+                                            <input id="kiss1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss1" class="checkbox-custom-label">200</label>
+                                        </td>
+                                        <td>
+                                            <input id="kiss2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss2" class="checkbox-custom-label">200</label>
+                                        </td>
+                                        <td>
+                                            <input id="kiss3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss3" class="checkbox-custom-label">200</label>
+                                        </td>
+                                        <td>
+                                            <input id="kiss4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss4" class="checkbox-custom-label">200</label>
+                                        </td>
+                                        <td>
+                                            <input id="kiss5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss5" class="checkbox-custom-label">200</label>
+                                        </td>
+                                        <td>
+                                            <input id="kiss6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss6" class="checkbox-custom-label">200</label>
+                                        </td>
+                                        <td>
+                                            <input id="kiss7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss7" class="checkbox-custom-label">200</label>
+                                        </td>
+                                        <td>
+                                            <input id="kiss8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="kiss8" class="checkbox-custom-label">200</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Perfume</th>
+                                        <td>
+                                            <input id="perfume0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume0" class="checkbox-custom-label">450</label>
+                                        </td>
+                                        <td>
+                                            <input id="perfume1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume1" class="checkbox-custom-label">450</label>
+                                        </td>
+                                        <td>
+                                            <input id="perfume2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume2" class="checkbox-custom-label">450</label>
+                                        </td>
+                                        <td>
+                                            <input id="perfume3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume3" class="checkbox-custom-label">450</label>
+                                        </td>
+                                        <td>
+                                            <input id="perfume4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume4" class="checkbox-custom-label">450</label>
+                                        </td>
+                                        <td>
+                                            <input id="perfume5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume5" class="checkbox-custom-label">450</label>
+                                        </td>
+                                        <td>
+                                            <input id="perfume6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume6" class="checkbox-custom-label">450</label>
+                                        </td>
+                                        <td>
+                                            <input id="perfume7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume7" class="checkbox-custom-label">450</label>
+                                        </td>
+                                        <td>
+                                            <input id="perfume8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="perfume8" class="checkbox-custom-label">450</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ring</th>
+                                        <td>
+                                            <input id="ring0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring0" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                        <td>
+                                            <input id="ring1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring1" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                        <td>
+                                            <input id="ring2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring2" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                        <td>
+                                            <input id="ring3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring3" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                        <td>
+                                            <input id="ring4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring4" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                        <td>
+                                            <input id="ring5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring5" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                        <td>
+                                            <input id="ring6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring6" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                        <td>
+                                            <input id="ring7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring7" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                        <td>
+                                            <input id="ring8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="ring8" class="checkbox-custom-label">10%</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cross</th>
+                                        <td>
+                                            <input id="cross0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross0" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                        <td>
+                                            <input id="cross1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross1" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                        <td>
+                                            <input id="cross2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross2" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                        <td>
+                                            <input id="cross3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross3" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                        <td>
+                                            <input id="cross4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross4" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                        <td>
+                                            <input id="cross5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross5" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                        <td>
+                                            <input id="cross6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross6" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                        <td>
+                                            <input id="cross7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross7" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                        <td>
+                                            <input id="cross8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="cross8" class="checkbox-custom-label">16%</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Aura</th>
+                                        <td>
+                                            <input id="aura0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura0" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura1" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura2" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura3" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura4" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura5" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura6" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura7" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura8" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Aura</th>
+                                        <td>
+                                            <input id="aura0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura0" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura1" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura2" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura3" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura4" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura5" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura6" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura7" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                        <td>
+                                            <input id="aura8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="aura8" class="checkbox-custom-label">1.8%</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Veil</th>
+                                        <td>
+                                            <input id="veil0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil0" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                        <td>
+                                            <input id="veil1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil1" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                        <td>
+                                            <input id="veil2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil2" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                        <td>
+                                            <input id="veil3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil3" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                        <td>
+                                            <input id="veil4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil4" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                        <td>
+                                            <input id="veil5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil5" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                        <td>
+                                            <input id="veil6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil6" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                        <td>
+                                            <input id="veil7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil7" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                        <td>
+                                            <input id="veil8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                            <label for="veil8" class="checkbox-custom-label">2.4%</label>
+                                        </td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -201,7 +512,7 @@
                         </div>
                         <div style="margin-bottom: 10px">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#cardListModal">Choose card</button>
-                            <button class="btn btn-primary" onclick="updateCardList()">111</button>
+                            <button class="btn btn-primary" onclick="updateCardListFilter()">111</button>
                         </div>
                         <div class="well well-sm">
                             <p><b id="result">Expected score: </b></p>
@@ -279,6 +590,11 @@
                 </div>
             </div>
             <!-- container -->
+            <footer class="text-center">
+                2017 Repraance.
+                <br> Help contribute or fork on <a href="https://github.com/Repraance/SIFCardManager">Github</a>
+                <br>All contents copyrights belong to their respective owners.
+            </footer>
         </div>
         <!-- jumbotron -->
 
@@ -293,180 +609,196 @@
                     </div>
                     <div class="modal-body" style="padding: 6px 3px 3px 6px">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="row" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px">
-                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; padding-right: 0px">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px; padding-right: 0px">
                                         <div class="well well-sm" style="margin-bottom: 8px; margin-left: 3px; margin-right: 3px">
                                             <div>
 
-                                                <input id="cardMuse" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <input id="cardMuse" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                 <label for="cardMuse" class="checkbox-custom-label">μ's</label>
                                             </div>
                                             <hr>
                                             <div class="shadowed-text">
                                                 <div>
-                                                    <input id="cardPrintemps" class="checkbox-custom" type="checkbox" onclick="alertStatus(this)">
+                                                    <input id="cardPrintemps" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardPrintemps" class="checkbox-custom-label">Printemps</label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardlilywhite" class="checkbox-custom" type="checkbox" onclick="alertStatus(this)">
+                                                    <input id="cardlilywhite" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardlilywhite" class="checkbox-custom-label">lilywhite</label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardBiBi" class="checkbox-custom" type="checkbox" onclick="alertStatus(this)">
+                                                    <input id="cardBiBi" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardBiBi" class="checkbox-custom-label">BiBi</label>
                                                 </div>
                                                 <hr>
                                                 <div>
-                                                    <input id="cardHonoka" class="checkbox-custom" type="checkbox" onclick="alertStatus(this)">
+                                                    <input id="cardHonoka" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardHonoka" class="checkbox-custom-label"><span style="color: orange">高坂穂乃果</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardEli" class="checkbox-custom" type="checkbox" onclick="alertStatus(this)">
+                                                    <input id="cardEli" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardEli" class="checkbox-custom-label"><span style="color: aqua">絢瀬絵里</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardKotori" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                                    <label for="cardKotori" class="checkbox-custom-label"><span style="color: silver">南小鳥</span></label>
+                                                    <input id="cardKotori" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
+                                                    <label for="cardKotori" class="checkbox-custom-label"><span style="color: silver">南ことり</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardUmi" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardUmi" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardUmi" class="checkbox-custom-label"><span style="color: blue">園田海未</span></label>
                                                 </div>
-
-
                                                 <div>
-                                                    <input id="cardRin" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardRin" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardRin" class="checkbox-custom-label"><span style="color: yellow">星空凛</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardMaki" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardMaki" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardMaki" class="checkbox-custom-label"><span style="color: red">西木野真姫</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardNozomi" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                                    <label for="cardNozomi" class="checkbox-custom-label"><span style="color: purple">東条希</span></label>
+                                                    <input id="cardNozomi" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
+                                                    <label for="cardNozomi" class="checkbox-custom-label"><span style="color: purple">東條希</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardHanayo" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardHanayo" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardHanayo" class="checkbox-custom-label"><span style="color: green">小泉花陽</span></label>
                                                 </div>
-
                                                 <div>
-
-                                                    <input id="cardNico" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardNico" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardNico" class="checkbox-custom-label"><span style="color: pink">矢澤にこ</span></label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px; padding-right: 0px">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px; padding-right: 0px">
                                         <div class="well well-sm" style="margin-bottom: 8px; margin-left: 3px; margin-right: 3px">
                                             <div>
-                                                <input id="cardAqours" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                <input id="cardAqours" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                 <label for="cardAqours" class="checkbox-custom-label">Aqours</label>
                                             </div>
                                             <hr>
                                             <div class="shadowed-text">
                                                 <div>
-                                                    <input id="cardCYaRon" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardCYaRon" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardCYaRon" class="checkbox-custom-label">CYaRon</label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardAZALEA" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardAZALEA" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardAZALEA" class="checkbox-custom-label">AZALEA</label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardGuiltyKiss" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardGuiltyKiss" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardGuiltyKiss" class="checkbox-custom-label">Guilty Kiss</label>
                                                 </div>
                                                 <hr>
                                                 <div>
-                                                    <input id="cardChika" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardChika" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardChika" class="checkbox-custom-label"><span style="color: #f08300">高海千歌</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardRiko" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardRiko" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardRiko" class="checkbox-custom-label"><span style="color: #ff7575">桜内梨子</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardKanan" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardKanan" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardKanan" class="checkbox-custom-label"><span style="color: #1bd5a8">松浦果南</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardDia" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardDia" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardDia" class="checkbox-custom-label"><span style="color: #ff2a2a">黒澤ダイヤ</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardYou" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardYou" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardYou" class="checkbox-custom-label"><span style="color: #68d1ff">渡辺曜</span></label>
                                                 </div>
 
                                                 <div>
-                                                    <input id="cardYoshiko" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardYoshiko" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardYoshiko" class="checkbox-custom-label"><span style="color: #c3c3c3">津島善子</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardHanamaru" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardHanamaru" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardHanamaru" class="checkbox-custom-label"><span style="color: #e2c800">国木田花丸</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardMari" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardMari" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardMari" class="checkbox-custom-label"><span style="color: #b761ff">小原鞠莉</span></label>
                                                 </div>
                                                 <div>
-                                                    <input id="cardRuby" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
+                                                    <input id="cardRuby" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardRuby" class="checkbox-custom-label"><span style="color: #f273c4">黒澤ルビィ</span></label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row" style="margin-left: 0px; margin-right: 0px;">
-                                    <div class="well well-sm no-margin-bottom">
-
-                                        <input id="card1stYear" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                        <label for="card1stYear" class="checkbox-custom-label">1st Year</label>
-
-                                        <input id="card2ndYear" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                        <label for="card2ndYear" class="checkbox-custom-label">2nd Year</label>
-
-                                        <input id="card3rdYear" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                        <label for="card3rdYear" class="checkbox-custom-label">3rd Year</label>
-
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px; padding-right: 0px">
+                                        <div class="well well-sm" style="margin-bottom: 8px; margin-left: 3px; margin-right: 3px">
+                                            <div>
+                                                <input id="card1stYear" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
+                                                <label for="card1stYear" class="checkbox-custom-label">1st Year</label>
+                                            </div>
+                                            <div>
+                                                <input id="card2ndYear" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
+                                                <label for="card2ndYear" class="checkbox-custom-label">2nd Year</label>
+                                            </div>
+                                            <div>
+                                                <input id="card3rdYear" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
+                                                <label for="card3rdYear" class="checkbox-custom-label">3rd Year</label>
+                                            </div>
+                                            <hr>
+                                            <!--
+                                            <div>
+                                                <input id="cardN" class="checkbox-custom" type="checkbox" onclick="">
+                                                <label for="cardN" class="checkbox-custom-label">N</label>
+                                            </div>
+                                            -->
+                                            <div>
+                                                <input id="cardR" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()">
+                                                <label for="cardR" class="checkbox-custom-label">R</label>
+                                            </div>
+                                            <div>
+                                                <input id="cardSR" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()" checked>
+                                                <label for="cardSR" class="checkbox-custom-label">SR</label>
+                                            </div>
+                                            <div>
+                                                <input id="cardSSR" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()" checked>
+                                                <label for="cardSSR" class="checkbox-custom-label">SSR</label>
+                                            </div>
+                                            <div>
+                                                <input id="cardUR" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()" checked>
+                                                <label for="cardUR" class="checkbox-custom-label">UR</label>
+                                            </div>
+                                            <hr>
+                                            <div>
+                                                <input id="cardSmile" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()" checked>
+                                                <label for="cardSmile" class="checkbox-custom-label"><span style="color: #E91E63">Smile</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardPure" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()" checked>
+                                                <label for="cardPure" class="checkbox-custom-label"><span style="color: #4CAF50">Pure</span></label>
+                                            </div>
+                                            <div>
+                                                <input id="cardCool" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()" checked>
+                                                <label for="cardCool" class="checkbox-custom-label"><span style="color: #2196F3">Cool</span></label>
+                                            </div>
+                                            <hr>
+                                            <div>
+                                                <input id="cardRankUp" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()" checked>
+                                                <label for="cardRankUp" class="checkbox-custom-label">RankUp</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
-
-                                <div class="well well-sm well-10">
-                                    <div style="display: inline">
-                                        <input id="cardN" class="checkbox-custom" type="checkbox" onclick="">
-                                        <label for="cardN" class="checkbox-custom-label">N</label>
-                                        <input id="cardR" class="checkbox-custom" type="checkbox" onclick="">
-                                        <label for="cardR" class="checkbox-custom-label">R</label>
-                                        <input id="cardSR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                        <label for="cardSR" class="checkbox-custom-label">SR</label>
-                                        <input id="cardSSR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                        <label for="cardSSR" class="checkbox-custom-label">SSR</label>
-                                        <input id="cardUR" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                        <label for="cardUR" class="checkbox-custom-label">UR</label>
-                                    </div>
-                                    <div style="display: inline">
-                                        <input id="cardSmile" class="checkbox-custom" type="checkbox" onclick="updateCardList()">
-                                        <label for="cardSmile" class="checkbox-custom-label"><span style="color: #E91E63">Smile</span></label>
-
-                                        <input id="cardPure" class="checkbox-custom" type="checkbox" onclick="updateCardList()">
-                                        <label for="cardPure" class="checkbox-custom-label"><span style="color: #4CAF50">Pure</span></label>
-
-                                        <input id="cardCool" class="checkbox-custom" type="checkbox" onclick="updateCardList()">
-                                        <label for="cardCool" class="checkbox-custom-label"><span style="color: #2196F3">Cool</span></label>
-                                    </div>
-                                </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div>
-                                    <select name="cardList" id="cardList" class="form-control" required="required"></select>
+                                    <select name="cardList" id="cardList" class="form-control" required="required" onchange="changeCardListColor()"></select>
                                 </div>
-
+                                <div id="avatar-cardlist">
+                                </div>
+                                <!--
                                 <div class="well well-sm">
                                     <div class="row" style="margin-left: 0px;margin-right: 0px; overflow: scroll">
 
@@ -478,18 +810,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                -->
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-primary" onclick="saveCard()">Save</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal -->
+
         </div>
     </body>
 

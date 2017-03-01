@@ -18,7 +18,8 @@ td {
 }
 
 td {
-    padding: 2px!important;
+    padding: 1px!important;
+    border-right: 1px solid #aaa;
 }
 
 table {
@@ -30,8 +31,14 @@ label {
     font-weight: 500;
 }
 
+input {
+    text-align: center;
+}
+
 .jumbotron {
     background-color: #FAFAFA;
+    margin-bottom: 0px;
+    padding-bottom: 10px;
 }
 
 .no-margin-bottom {

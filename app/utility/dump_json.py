@@ -17,7 +17,7 @@ def get_unit_m():
     for record in result:
         unit_m.append(OrderedDict(zip(unit_m_field, record)))
 
-    with open('../data/json/unit_m.json', 'w') as fp:
+    with open('../static/json/unit_m.json', 'w') as fp:
         json.dump(unit_m, fp)
 
 
@@ -31,7 +31,7 @@ def get_unit_type_member_tag_m():
     for record in result:
         unit_type_member_tag_m.append(OrderedDict(zip(unit_type_member_tag_m_field, record)))
 
-    with open('../data/json/unit_type_member_tag_m.json', 'w') as fp:
+    with open('../static/json/unit_type_member_tag_m.json', 'w') as fp:
         json.dump(unit_type_member_tag_m, fp)
 
 
@@ -51,7 +51,7 @@ def get_unit_leader_skill_m():
         if skill['leader_skill_effect_type'] > 3:
             skill['leader_skill_effect_type'] = int(skill['leader_skill_effect_type'] / 10) % 10
 
-    with open('../data/json/unit_leader_skill_m.json', 'w') as fp:
+    with open('../static/json/unit_leader_skill_m.json', 'w') as fp:
         json.dump(unit_leader_skill_m, fp)
 
 
@@ -67,7 +67,7 @@ def get_unit_leader_skill_extra_m():
     for record in result:
         unit_leader_skill_extra_m.append(OrderedDict(zip(unit_leader_skill_extra_m_field, record)))
 
-    with open('../data/json/unit_leader_skill_extra_m.json', 'w') as fp:
+    with open('../static/json/unit_leader_skill_extra_m.json', 'w') as fp:
         json.dump(unit_leader_skill_extra_m, fp)
 
 
@@ -81,7 +81,7 @@ def get_unit_skill_m():
     for record in result:
         unit_skill_m.append(OrderedDict(zip(unit_skill_m_field, record)))
 
-    with open('../data/json/unit_skill_m.json', 'w') as fp:
+    with open('../static/json/unit_skill_m.json', 'w') as fp:
         json.dump(unit_skill_m, fp)
 
 
@@ -98,7 +98,7 @@ def get_unit_skill_level_m():
     for record in result:
         unit_skill_level_m.append(OrderedDict(zip(unit_skill_level_m_field, record)))
 
-    with open('../data/json/unit_skill_level_m.json', 'w') as fp:
+    with open('../static/json/unit_skill_level_m.json', 'w') as fp:
         json.dump(unit_skill_level_m, fp)
 
     print(unit_skill_level_m)

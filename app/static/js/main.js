@@ -29,8 +29,8 @@ var rarityIndex = {
     1: 'N',
     2: 'R',
     3: 'SR',
-    4: 'SSR',
-    5: 'UR'
+    4: 'UR',
+    5: 'SSR'
 }
 
 var live_setting_url = 'static/maps/live_setting.json'
@@ -568,6 +568,8 @@ function changeSelectColor(id) {
     }
     return 0;
 }
+
+
 
 function addLiveList() {
     // liveList3 is hidden
