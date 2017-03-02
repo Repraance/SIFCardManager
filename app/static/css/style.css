@@ -87,7 +87,6 @@ input {
 .radio-custom,
 .radio-custom-label {
     display: inline-block;
-    vertical-align: middle;
     margin: 5px;
     cursor: pointer;
 }

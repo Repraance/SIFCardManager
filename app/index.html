@@ -45,13 +45,21 @@
                                 <label for="live3" class="checkbox-custom-label"><span style="font-size: 20px">Third Live</span></label>
                                 <select name="live" id="liveList3" class="form-control" required="required" onchange="changeSelectColors()"></select>
                             </div>
+                            <div style="margin-bottom: 10px">
+                                <b style="margin-left: 5px; margin-right: 15px">Total combo: <span id="totalCombo" style="white-space:pre"></span></b>
+                            </div>
 
-                            <div class="form-group form-inline" style="margin-bottom: 0px">
-                                <div style="display: inline">
-                                    <b style="margin-left: 5px">Perfect rate:</b>
-                                    <input type="number" style="max-width: 100px" class="form-control" id="perfectRate" min="0" value="0.9" max="1" step="0.01">
-                                    <b style="margin-left: 5px; margin-right: 15px">Total combo: <span id="totalCombo" style="white-space:pre"></span></b>
-                                </div>
+                            <div class="form-inline" style="margin-bottom: 0px">
+                                <input id="no-fc" class="checkbox-custom" type="checkbox">
+                                <label for="no-fc" class="checkbox-custom-label"><b>Not full combo</b></label>
+                                <b style="margin-left: 5px">Max combo:</b>
+                                <input type="number" style="max-width: 100px" class="form-control" id="perfectRate" min="0" value="0" max="2500" step="1">
+                                <b style="margin-left: 5px">Perfect rate:</b>
+                                <input type="number" style="max-width: 100px" class="form-control" id="perfectRate" min="0" value="0.9" max="1" step="0.01">
+
+                            </div>
+                            <div class="form-inline" style="margin-bottom: 0px">
+
                             </div>
                         </div>
                     </div>
@@ -169,19 +177,19 @@
 
                                     </tr>
 
-                                    <tr id="unitList">
+                                    <tr id="avatar">
                                         <th>Avatar<br><span style="font-weight: normal;font-size: 10px">Click to <br>select or <br>change card</span></th>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
-                                        <td><img src="static/image/placeHolder.png" class="img-responsive" draggable="true"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar0" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar1" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar2" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar3" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar4" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar5" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar6" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar7" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                        <td><img src="static/image/placeHolder.png" id="avatar8" class="img-responsive" onclick="openCardSelectModal(this)"></td>
                                     </tr>
-                                    <tr>
+                                    <tr id="smile-value">
                                         <th><span style="color: #E91E63">Smile</span></th>
                                         <td><input type="text" class="form-control" size="1"></td>
                                         <td><input type="text" class="form-control" size="1"></td>
@@ -193,7 +201,7 @@
                                         <td><input type="text" class="form-control" size="1"></td>
                                         <td><input type="text" class="form-control" size="1"></td>
                                     </tr>
-                                    <tr>
+                                    <tr id="pure-value">
                                         <th><span style="color: #4CAF50">Pure</span></th>
                                         <td><input type="text" class="form-control" size="1"></td>
                                         <td><input type="text" class="form-control" size="1"></td>
@@ -205,7 +213,7 @@
                                         <td><input type="text" class="form-control" size="1"></td>
                                         <td><input type="text" class="form-control" size="1"></td>
                                     </tr>
-                                    <tr>
+                                    <tr id="cool-value">
                                         <th><span style="color: #2196F3">Cool</span></th>
                                         <td><input type="text" class="form-control" size="1"></td>
                                         <td><input type="text" class="form-control" size="1"></td>
@@ -217,7 +225,7 @@
                                         <td><input type="text" class="form-control" size="1"></td>
                                         <td><input type="text" class="form-control" size="1"></td>
                                     </tr>
-                                    <tr>
+                                    <tr id="skill-lv">
                                         <th>Skill Lv</th>
                                         <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
                                         <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
@@ -229,7 +237,7 @@
                                         <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
                                         <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
                                     </tr>
-                                    <tr>
+                                    <tr id="kiss">
                                         <th>Kiss</th>
                                         <td>
                                             <input id="kiss0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
@@ -511,7 +519,7 @@
                             <button type="button" class="btn btn-large btn-block btn-primary" onclick="calculate()">Calculate</button>
                         </div>
                         <div style="margin-bottom: 10px">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#cardListModal">Choose card</button>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#cardListModal">Select card</button>
                             <button class="btn btn-primary" onclick="updateCardListFilter()">111</button>
                         </div>
                         <div class="well well-sm">
@@ -785,7 +793,7 @@
                                             </div>
                                             <hr>
                                             <div>
-                                                <input id="cardRankUp" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter()" checked>
+                                                <input id="cardRankUp" class="checkbox-custom" type="checkbox" onclick="changeCardListColor()" checked>
                                                 <label for="cardRankUp" class="checkbox-custom-label">RankUp</label>
                                             </div>
                                         </div>

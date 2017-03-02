@@ -12,7 +12,10 @@ $(document).ready(function() {
 })
 
 var liveList = new Array();
-var teamInfo;
+var teamInfo = new Array(10);
+for (let i = 0; i < 10; i++) {
+    teamInfo[i] = new Object();
+}
 var colorIndex = {
     1: '#E91E63',
     2: '#4CAF50',

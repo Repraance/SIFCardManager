@@ -1,4 +1,5 @@
 var currentCardId;
+var currentCardRankUp;
 var currentTeamIndex;
 
 function prefix0(num) {
@@ -281,8 +282,15 @@ function updateCardListFilter(obj) {
     var cardSSR = document.getElementById('cardSSR').checked;
     var cardUR = document.getElementById('cardUR').checked;
 
-    var cardList = $('#cardList');
-    cardList.empty();
+    //var cardList = $('#cardList');
+    var cardList = document.getElementById('cardList');
+    var selectCard = cardList.options[cardList.selectedIndex];
+    if (selectCard !== undefined) {
+        var selectCardText = cardList.options[cardList.selectedIndex].text;
+        var selectCardId = cardList.options[cardList.selectedIndex].value;
+        var selectCardColor = cardList.options[cardList.selectedIndex].style.color;
+    }
+    cardList.options.length = 0;
 
 
     for (var i = 0; i < unit.length; i++) {
@@ -413,40 +421,91 @@ function updateCardListFilter(obj) {
         }
 
         let cardText = prefix0(currentCard.unit_number) + ' [' + rarityIndex[currentCard.rarity] + ']  ' + currentCard.name;
-
         if (currentCard.eponym)
             cardText += '『' + currentCard.eponym + '』';
 
-        let option = $('<option>').val(currentCard.unit_number).html(cardText);
-        option.css('color', colorIndex[currentCard.attribute_id]);
+        cardList.options.add(new Option(cardText, currentCard.unit_number));
+        cardList[cardList.options.length - 1].style.color = colorIndex[currentCard.attribute_id];
 
-        cardList.append(option);
-
+        if (selectCardId == currentCard.unit_number) {
+            cardList[cardList.options.length - 1].selected = true;
+            cardList[cardList.options.length - 1]
+        }
     }
     changeCardListColor();
 }
 
 function changeCardListColor() {
     var lives = document.getElementById('cardList');
+    var cardListAvatar = document.getElementById('avatar-cardlist');
     var selectedLive = lives.options[lives.selectedIndex];
     if (selectedLive != undefined) {
+
         lives.style.color = selectedLive.style.color;
+        var avatarURL = 'static/image/card/icon/'
+        currentCardRankUp = document.getElementById('cardRankUp').checked;
+        if (currentCardRankUp) {
+            avatarURL += 'rankup/';
+        } else {
+            avatarURL += 'normal/';
+        }
+        var selectedLive = lives.options[lives.selectedIndex];
+        var selectCardId = parseInt(selectedLive.text.slice(0, 4), 10);
+        var avatarImg = document.createElement('img');
+        avatarImg.src = avatarURL + String(selectCardId) + '.png';
+
+        cardListAvatar.innerHTML = '';
+        cardListAvatar.appendChild(avatarImg);
+
+        currentCardId = selectCardId;
+    } else {
+        cardListAvatar.innerHTML = '';
     }
-    var avatarURL = 'static/image/card/icon/normal/'
-    var selectedLive = lives.options[lives.selectedIndex];
-    var selectCardId = parseInt(selectedLive.text.slice(0, 4), 10);
-    var avatarImg = document.createElement('img');
-    avatarImg.src = avatarURL + String(selectCardId) + '.png';
-    var cardListAvatar = document.getElementById('avatar-cardlist');
-    cardListAvatar.innerHTML = '';
-    cardListAvatar.appendChild(avatarImg);
+    console.log(currentCardId);
+
 }
 
 function changeCardList(obj) {
     changeCardListColor();
+}
 
+function openCardSelectModal(obj) {
+    currentTeamIndex = parseInt(obj.id.slice(-1));
+    $('#cardListModal').modal('toggle');
 }
 
 function saveCard() {
+    var avatarURL = 'static/image/card/icon/';
+    if (currentCardRankUp) {
+        avatarURL += 'rankup/';
+    } else {
+        avatarURL += 'normal/';
+    }
+    if (currentCardId) {
+        $('#avatar').find('img').eq(currentTeamIndex).attr('src', avatarURL + String(currentCardId) + '.png');
+        //console.log(currentCardId, currentTeamIndex, currentCardRankUp);
+        for (let i = 0; i < unit.length; i++) {
+            if (currentCardId == unit[i].unit_number) {
+                console.log(currentCardId);
+                teamInfo[currentTeamIndex].cardid = currentCardId;
+                let currentCardAttribute = [attributeIndex[unit[i].attribute_id]]
+                if (currentCardRankUp) {
+                    teamInfo[currentTeamIndex].mezame = 1;
+                    teamInfo[currentTeamIndex].smile = unit[i].smile_max;
+                    teamInfo[currentTeamIndex].pure = unit[i].pure_max;
+                    teamInfo[currentTeamIndex].cool = unit[i].cool_max;
+                    teamInfo[currentTeamIndex][currentCardAttribute] += unit[i].after_love_max;
+                } else {
+                    teamInfo[currentTeamIndex].mezame = 0;
+                    teamInfo[currentTeamIndex].smile = unit[i].smile;
+                    teamInfo[currentTeamIndex].pure = unit[i].pure;
+                    teamInfo[currentTeamIndex].cool = unit[i].cool;
+                    teamInfo[currentTeamIndex][currentCardAttribute] += unit[i].before_love_max;
+                }
+                break;
+            }
+
+        }
+    }
     $('#cardListModal').modal('toggle');
 }
