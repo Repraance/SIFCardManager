@@ -1,10 +1,16 @@
-var currentCardId;
+var currentMemberIndex;
+var currentCardInfo;
 var currentCardRankUp;
-var currentTeamIndex;
+var currentCardSkillLv;
 
 function prefix0(num) {
     let numStr = '0000' + num;
     return numStr.substring(numStr.length - 4);
+}
+
+function openCardSelectModal(obj) {
+    currentMemberIndex = parseInt(obj.id.slice(-1));
+    $('#cardListModal').modal('toggle');
 }
 
 function updateCardListFilter(obj) {
@@ -283,7 +289,7 @@ function updateCardListFilter(obj) {
     var cardUR = document.getElementById('cardUR').checked;
 
     //var cardList = $('#cardList');
-    var cardList = document.getElementById('cardList');
+    var cardList = document.getElementById("card-list");
     var selectCard = cardList.options[cardList.selectedIndex];
     if (selectCard !== undefined) {
         var selectCardText = cardList.options[cardList.selectedIndex].text;
@@ -432,80 +438,203 @@ function updateCardListFilter(obj) {
             cardList[cardList.options.length - 1]
         }
     }
-    changeCardListColor();
+    changeCardSelect();
 }
 
-function changeCardListColor() {
-    var lives = document.getElementById('cardList');
-    var cardListAvatar = document.getElementById('avatar-cardlist');
-    var selectedLive = lives.options[lives.selectedIndex];
-    if (selectedLive != undefined) {
+function changeCardSelect() {
+    var cardList = document.getElementById('card-list');
+    var cardListAvatar = document.getElementById('avatar-card-list');
+    var selectedCard = cardList.options[cardList.selectedIndex];
 
-        lives.style.color = selectedLive.style.color;
-        var avatarURL = 'static/image/card/icon/'
+    var smile = 'N/A',
+        pure = 'N/A',
+        cool = 'N/A',
+        centerSkill = 'N/A',
+        centerSkillDescription = 'N/A',
+        skillDescription = 'N/A';
+
+    var cardListSmile = document.getElementById('smile-card-list');
+    var cardListPure = document.getElementById('pure-card-list');
+    var cardListCool = document.getElementById('cool-card-list');
+    var cardListCenterSkill = document.getElementById('center-skill-card-list');
+    var cardListCenterSkillDescription = document.getElementById('center-skill-description-card-list');
+    var cardListSkillDescription = document.getElementById('skill-description-card-list');
+
+    currentCardSkillLv = document.getElementById('skill-lv-card-list').value;
+
+    var avatarURL = 'static/image/placeHolder.png';
+
+    if (selectedCard != undefined) {
+        var selectCardId = parseInt(selectedCard.text.slice(0, 4), 10);
+        cardList.style.color = selectedCard.style.color;
         currentCardRankUp = document.getElementById('cardRankUp').checked;
-        if (currentCardRankUp) {
-            avatarURL += 'rankup/';
-        } else {
-            avatarURL += 'normal/';
+        avatarURL = 'static/image/card/icon/'
+
+        // Find current card
+        for (let i = 0; i < unit.length; i++) {
+            if (selectCardId == unit[i].unit_number) {
+                currentCardInfo = unit[i];
+                break;
+            }
         }
-        var selectedLive = lives.options[lives.selectedIndex];
-        var selectCardId = parseInt(selectedLive.text.slice(0, 4), 10);
-        var avatarImg = document.createElement('img');
-        avatarImg.src = avatarURL + String(selectCardId) + '.png';
 
-        cardListAvatar.innerHTML = '';
-        cardListAvatar.appendChild(avatarImg);
+        if (currentCardRankUp) {
+            smile = currentCardInfo.smile_max;
+            pure = currentCardInfo.pure_max;
+            cool = currentCardInfo.cool_max;
+            avatarURL += 'rankup/' + String(selectCardId) + '.png';
 
-        currentCardId = selectCardId;
+        } else {
+            smile = currentCardInfo.smile;
+            pure = currentCardInfo.pure;
+            cool = currentCardInfo.cool;
+            avatarURL += 'normal/' + String(selectCardId) + '.png';
+        }
+
+        if (currentCardInfo.leader_skill_info) {
+            centerSkill = currentCardInfo.leader_skill_info.name;
+            centerSkillDescription = currentCardInfo.leader_skill_info.description;
+        }
+
+        if (currentCardInfo.skill_info) {
+            var s1 = currentCardInfo.skill_info[currentCardSkillLv - 1].trigger_value;
+            var s2 = currentCardInfo.skill_info[currentCardSkillLv - 1].activation_rate;
+            var s3 = currentCardInfo.skill_info[currentCardSkillLv - 1].effect_value ? Number(currentCardInfo.skill_info[currentCardSkillLv - 1].effect_value) : Number(currentCardInfo.skill_info[currentCardSkillLv - 1].discharge_time);
+            skillDescription = currentCardInfo.skill_info[0].description.replace(/\d+(\D+)\d+(\D+)\d*\.*\d*/, String(s1) + '$1' + String(s2) + '$2' + String(s3));
+        }
     } else {
-        cardListAvatar.innerHTML = '';
+        //cardListAvatar.src = 'static/image/placeHolder.png';
+        currentCardInfo = null;
     }
-    console.log(currentCardId);
+    cardListSmile.innerHTML = smile;
+    cardListPure.innerHTML = pure;
+    cardListCool.innerHTML = cool;
+    cardListCenterSkill.innerHTML = centerSkill;
+    cardListCenterSkillDescription.innerHTML = centerSkillDescription;
+    cardListSkillDescription.innerHTML = skillDescription
+    cardListAvatar.src = avatarURL;
 
 }
 
-function changeCardList(obj) {
-    changeCardListColor();
-}
-
-function openCardSelectModal(obj) {
-    currentTeamIndex = parseInt(obj.id.slice(-1));
-    $('#cardListModal').modal('toggle');
+function changeSkillLv(obj) {
+    currentCardSkillLv = obj.value;
+    var cardListSkillDescription = document.getElementById('skill-description-card-list');
+    if (currentCardInfo) {
+        if (currentCardInfo.skill_info) {
+            var s1 = currentCardInfo.skill_info[currentCardSkillLv - 1].trigger_value;
+            var s2 = currentCardInfo.skill_info[currentCardSkillLv - 1].activation_rate;
+            var s3 = currentCardInfo.skill_info[currentCardSkillLv - 1].effect_value ? Number(currentCardInfo.skill_info[currentCardSkillLv - 1].effect_value) : Number(currentCardInfo.skill_info[currentCardSkillLv - 1].discharge_time);
+            var skillDescription = currentCardInfo.skill_info[0].description.replace(/\d+(\D+)\d+(\D+)\d*\.*\d*/, String(s1) + '$1' + String(s2) + '$2' + String(s3));
+            cardListSkillDescription.innerHTML = skillDescription;
+        }
+    }
 }
 
 function saveCard() {
-    var avatarURL = 'static/image/card/icon/';
-    if (currentCardRankUp) {
-        avatarURL += 'rankup/';
-    } else {
-        avatarURL += 'normal/';
-    }
-    if (currentCardId) {
-        $('#avatar').find('img').eq(currentTeamIndex).attr('src', avatarURL + String(currentCardId) + '.png');
-        //console.log(currentCardId, currentTeamIndex, currentCardRankUp);
-        for (let i = 0; i < unit.length; i++) {
-            if (currentCardId == unit[i].unit_number) {
-                console.log(currentCardId);
-                teamInfo[currentTeamIndex].cardid = currentCardId;
-                let currentCardAttribute = [attributeIndex[unit[i].attribute_id]]
-                if (currentCardRankUp) {
-                    teamInfo[currentTeamIndex].mezame = 1;
-                    teamInfo[currentTeamIndex].smile = unit[i].smile_max;
-                    teamInfo[currentTeamIndex].pure = unit[i].pure_max;
-                    teamInfo[currentTeamIndex].cool = unit[i].cool_max;
-                    teamInfo[currentTeamIndex][currentCardAttribute] += unit[i].after_love_max;
-                } else {
-                    teamInfo[currentTeamIndex].mezame = 0;
-                    teamInfo[currentTeamIndex].smile = unit[i].smile;
-                    teamInfo[currentTeamIndex].pure = unit[i].pure;
-                    teamInfo[currentTeamIndex].cool = unit[i].cool;
-                    teamInfo[currentTeamIndex][currentCardAttribute] += unit[i].before_love_max;
-                }
-                break;
-            }
-
+    if (currentCardInfo) {
+        var currentMember = teamInfo[currentMemberIndex];
+        currentMember.originalCardInfo = currentCardInfo;
+        currentMember.cardid = currentCardInfo.unit_number;
+        currentMember.attribute_id = currentCardInfo.attribute_id;
+        currentMember.attribute = attributeIndex[currentMember.attribute_id];
+        currentMember.skilllevel = currentCardSkillLv;
+        if (currentCardRankUp) {
+            currentMember.mezame = 1;
+            currentMember.smile = currentCardInfo.smile_max;
+            currentMember.pure = currentCardInfo.pure_max;
+            currentMember.cool = currentCardInfo.cool_max;
+            currentMember[currentMember.attribute] += currentCardInfo.after_love_max;
+        } else {
+            currentMember.mezame = 0;
+            currentMember.smile = currentCardInfo.smile;
+            currentMember.pure = currentCardInfo.pure;
+            currentMember.cool = currentCardInfo.cool;
+            currentMember[currentMember.attribute] += currentCardInfo.before_love_max;
         }
+        fillMemberInfo(currentMemberIndex, currentMember);
     }
     $('#cardListModal').modal('toggle');
+}
+
+
+
+function fillMemberInfo(memberIndex, memberInfo) {
+    var avatarURL = 'static/image/card/icon/';
+    if (memberInfo.mezame) {
+        avatarURL += 'rankup/' + String(memberInfo.cardid) + '.png';
+        document.getElementById('rankup-' + String(memberIndex)).checked = true;
+    } else {
+        avatarURL += 'normal/' + String(memberInfo.cardid) + '.png';
+        document.getElementById('rankup-' + String(memberIndex)).checked = false;
+    }
+    $('#smile-value input').eq(memberIndex).val(memberInfo.smile);
+    $('#pure-value input').eq(memberIndex).val(memberInfo.pure);
+    $('#cool-value input').eq(memberIndex).val(memberInfo.cool);
+    $('#skill-lv input').eq(memberIndex).val(memberInfo.skilllevel);
+    $('#avatar img').eq(memberIndex).attr('src', avatarURL);
+    $('#fixed-value select').eq(memberIndex).val(memberInfo.gemnum);
+    $('#single-percent select').eq(memberIndex).val(memberInfo.gemsinglepercent);
+    $('#total-percent select').eq(memberIndex).val(memberInfo.gemallpercent);
+    if (memberInfo.gemskill)
+        document.getElementById('charm-heal-' + String(memberIndex)).checked = true;
+    else
+        document.getElementById('charm-heal-' + String(memberIndex)).checked = false;
+    if (memberInfo.gemacc)
+        document.getElementById('trick-' + String(memberIndex)).checked = true;
+    else
+        document.getElementById('trick-' + String(memberIndex)).checked = false;
+}
+
+function changeMemberRankup(obj) {
+    var rankup = obj.checked;
+    var index = Number(obj.id.slice(-1));
+    var currentMember = teamInfo[index];
+    // If current member is set
+    if (currentMember.cardid) {
+        if (rankup) {
+            currentMember.mezame = 1;
+            currentMember.smile = currentMember.originalCardInfo.smile_max;
+            currentMember.pure = currentMember.originalCardInfo.pure_max;
+            currentMember.cool = currentMember.originalCardInfo.cool_max;
+            currentMember[currentMember.attribute] += currentMember.originalCardInfo.after_love_max;
+        } else {
+            currentMember.mezame = 0;
+            currentMember.smile = currentMember.originalCardInfo.smile;
+            currentMember.pure = currentMember.originalCardInfo.pure;
+            currentMember.cool = currentMember.originalCardInfo.cool;
+            currentMember[currentMember.attribute] += currentMember.originalCardInfo.before_love_max;
+        }
+        fillMemberInfo(index, currentMember);
+    }
+}
+
+function changeMemberSchoolIdolSkill(obj) {
+    var index = $('.team-list select').index($(obj));
+    if (index != -1) {
+        switch (parseInt(index / 9)) {
+            case 0:
+                teamInfo[index % 9].gemnum = Number($(obj).val());
+                break;
+            case 1:
+                teamInfo[index % 9].gemsinglepercent = Number($(obj).val());
+                break;
+            case 2:
+                teamInfo[index % 9].gemallpercent = Number($(obj).val());
+                break;
+        }
+        // Charm, Teal and Trick
+    } else {
+        var id = obj.id;
+        var equipped = obj.checked;
+        var index = Number(id.slice(-1));
+        if (id[0] == 'c')
+            teamInfo[index].gemskill = equipped ? 1 : 0;
+        else
+            teamInfo[index].gemacc = equipped ? 1 : 0;
+    }
+}
+
+function changeMemberSkillLv(obj) {
+    var index = Number($('#skill-lv input').index($(obj)));
+    teamInfo[index].skilllevel = Number($(obj).val());
 }

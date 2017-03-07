@@ -14,7 +14,7 @@
 
         <script src="static/js/main.js"></script>
         <script src="static/js/calculate.js"></script>
-        <script src="static/js/cardList.js"></script>
+        <script src="static/js/cardSelect.js"></script>
         <script src="static/js/team.js"></script>
 
     </head>
@@ -32,7 +32,9 @@
 
                             <div style="margin-bottom: 10px">
                                 <input id="live1" class="checkbox-custom" type="checkbox" checked readonly="readonly" onclick="return false;">
-                                <label for="live1" class="checkbox-custom-label"><span style="font-size: 20px">First Live</span></label>
+                                <label for="live1" class="checkbox-custom-label"><b style="font-size: 18px">First Live</b></label>
+                                <input id="score1" class="checkbox-custom" type="checkbox">
+                                <label for="live2" class="checkbox-custom-label">Score 1.1x</label>
                                 <select name="live" id="liveList1" class="form-control" required="required" onchange="changeSelectColors()"></select>
                             </div>
                             <div style="margin-bottom: 10px">
@@ -108,44 +110,6 @@
                         </div>
 
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding-bottom: 0px">
-                        <div class="well well-sm">
-
-
-                            <div style="margin-bottom: 10px" id="liveListList">
-                                <div style="margin-bottom: 10px" class="well well-sm" id="liveList1Frame">
-                                    <h4>First Live</h4>
-                                    <select name="live" id="liveList1" class="form-control" required="required" onchange="changeSelectColors()"></select>
-                                </div>
-                                <div style="margin-bottom: 10px" class="well well-sm" id="liveList2Frame">
-                                    <h4>Second Live</h4>
-                                    <select name="live" id="liveList2" class="form-control" required="required" onchange="changeSelectColors()"></select>
-                                </div>
-                                <div style="margin-bottom: 10px" class="well well-sm" id="liveList3Frame">
-                                    <h4>Third Live</h4>
-                                    <select name="live" id="liveList3" class="form-control" required="required" onchange="changeSelectColors()"></select>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-inline" style="margin-bottom: 0px">
-                                <div style="display: inline">
-                                    <b style="margin-left: 5px">Perfect rate:</b>
-                                    <input type="number" style="max-width: 100px" class="form-control" id="perfectRate" min="0" value="0.9" max="1" step="0.01">
-                                    <b style="margin-left: 5px; margin-right: 15px">Total combo: <span id="totalCombo" style="white-space:pre"></span></b>
-                                </div>
-
-
-                                <div style="display: inline">
-                                    <button type="button" class="btn btn-default" onclick="addLiveList()" id="addLiveList">
-                                    <span class="glyphicon glyphicon-plus" style="color: green"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-default" onclick="removeLiveList()" id="removeLiveList">
-                                    <span class="glyphicon glyphicon-minus" style="color: red"></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
@@ -153,7 +117,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                         <div class="well well-sm">
 
-                            <table class="table" style="margin-top: 10px">
+                            <table class="table team-list" style="margin-top: 10px">
                                 <caption>
                                     <div class="form-inline text-right">
                                         <p style="float: left; margin-left: 10px; margin-right: 10px"><b>Team info</b></p>
@@ -188,6 +152,45 @@
                                         <td><img src="static/image/placeHolder.png" id="avatar6" class="img-responsive" onclick="openCardSelectModal(this)"></td>
                                         <td><img src="static/image/placeHolder.png" id="avatar7" class="img-responsive" onclick="openCardSelectModal(this)"></td>
                                         <td><img src="static/image/placeHolder.png" id="avatar8" class="img-responsive" onclick="openCardSelectModal(this)"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Rankup</th>
+                                        <td>
+                                            <input id="rankup-0" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-0" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="rankup-1" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-1" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="rankup-2" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-2" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="rankup-3" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-3" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="rankup-4" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-4" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="rankup-5" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-5" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="rankup-6" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-6" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="rankup-7" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-7" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="rankup-8" class="checkbox-custom" type="checkbox" onclick="changeMemberRankup(this)">
+                                            <label for="rankup-8" class="checkbox-custom-label">Yes</label>
+                                        </td>
                                     </tr>
                                     <tr id="smile-value">
                                         <th><span style="color: #E91E63">Smile</span></th>
@@ -227,300 +230,326 @@
                                     </tr>
                                     <tr id="skill-lv">
                                         <th>Skill Lv</th>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                        <td><input type="number" class="form-control" id="perfectRate" min="1" max="8" step="1"></td>
-                                    </tr>
-                                    <tr id="kiss">
-                                        <th>Kiss</th>
-                                        <td>
-                                            <input id="kiss0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss0" class="checkbox-custom-label">200</label>
-                                        </td>
-                                        <td>
-                                            <input id="kiss1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss1" class="checkbox-custom-label">200</label>
-                                        </td>
-                                        <td>
-                                            <input id="kiss2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss2" class="checkbox-custom-label">200</label>
-                                        </td>
-                                        <td>
-                                            <input id="kiss3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss3" class="checkbox-custom-label">200</label>
-                                        </td>
-                                        <td>
-                                            <input id="kiss4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss4" class="checkbox-custom-label">200</label>
-                                        </td>
-                                        <td>
-                                            <input id="kiss5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss5" class="checkbox-custom-label">200</label>
-                                        </td>
-                                        <td>
-                                            <input id="kiss6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss6" class="checkbox-custom-label">200</label>
-                                        </td>
-                                        <td>
-                                            <input id="kiss7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss7" class="checkbox-custom-label">200</label>
-                                        </td>
-                                        <td>
-                                            <input id="kiss8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="kiss8" class="checkbox-custom-label">200</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Perfume</th>
-                                        <td>
-                                            <input id="perfume0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume0" class="checkbox-custom-label">450</label>
-                                        </td>
-                                        <td>
-                                            <input id="perfume1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume1" class="checkbox-custom-label">450</label>
-                                        </td>
-                                        <td>
-                                            <input id="perfume2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume2" class="checkbox-custom-label">450</label>
-                                        </td>
-                                        <td>
-                                            <input id="perfume3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume3" class="checkbox-custom-label">450</label>
-                                        </td>
-                                        <td>
-                                            <input id="perfume4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume4" class="checkbox-custom-label">450</label>
-                                        </td>
-                                        <td>
-                                            <input id="perfume5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume5" class="checkbox-custom-label">450</label>
-                                        </td>
-                                        <td>
-                                            <input id="perfume6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume6" class="checkbox-custom-label">450</label>
-                                        </td>
-                                        <td>
-                                            <input id="perfume7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume7" class="checkbox-custom-label">450</label>
-                                        </td>
-                                        <td>
-                                            <input id="perfume8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="perfume8" class="checkbox-custom-label">450</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Ring</th>
-                                        <td>
-                                            <input id="ring0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring0" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                        <td>
-                                            <input id="ring1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring1" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                        <td>
-                                            <input id="ring2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring2" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                        <td>
-                                            <input id="ring3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring3" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                        <td>
-                                            <input id="ring4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring4" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                        <td>
-                                            <input id="ring5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring5" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                        <td>
-                                            <input id="ring6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring6" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                        <td>
-                                            <input id="ring7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring7" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                        <td>
-                                            <input id="ring8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="ring8" class="checkbox-custom-label">10%</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Cross</th>
-                                        <td>
-                                            <input id="cross0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross0" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                        <td>
-                                            <input id="cross1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross1" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                        <td>
-                                            <input id="cross2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross2" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                        <td>
-                                            <input id="cross3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross3" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                        <td>
-                                            <input id="cross4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross4" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                        <td>
-                                            <input id="cross5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross5" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                        <td>
-                                            <input id="cross6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross6" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                        <td>
-                                            <input id="cross7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross7" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                        <td>
-                                            <input id="cross8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="cross8" class="checkbox-custom-label">16%</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Aura</th>
-                                        <td>
-                                            <input id="aura0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura0" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura1" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura2" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura3" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura4" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura5" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura6" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura7" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura8" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Aura</th>
-                                        <td>
-                                            <input id="aura0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura0" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura1" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura2" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura3" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura4" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura5" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura6" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura7" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                        <td>
-                                            <input id="aura8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="aura8" class="checkbox-custom-label">1.8%</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Veil</th>
-                                        <td>
-                                            <input id="veil0" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil0" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                        <td>
-                                            <input id="veil1" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil1" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                        <td>
-                                            <input id="veil2" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil2" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                        <td>
-                                            <input id="veil3" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil3" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                        <td>
-                                            <input id="veil4" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil4" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                        <td>
-                                            <input id="veil5" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil5" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                        <td>
-                                            <input id="veil6" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil6" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                        <td>
-                                            <input id="veil7" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil7" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                        <td>
-                                            <input id="veil8" class="checkbox-custom" type="checkbox" onclick="updateLiveLists()">
-                                            <label for="veil8" class="checkbox-custom-label">2.4%</label>
-                                        </td>
-                                    </tr>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
 
+                                    </tr>
+                                    <tr id="fixed-value">
+                                        <th>Fixed value</th>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="200">200</option>
+                                               <option value="450">450</option>
+                                               <option value="650">650</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr id="single-percent">
+                                        <th>Single percent</th>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.1">10%</option>
+                                               <option value="0.16">16%</option>
+                                               <option value="0.26">26%</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr id="total-percent">
+                                        <th>Total percent</th>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                               <option value="0">0</option>
+                                               <option value="0.018">1.8%</option>
+                                               <option value="0.024">2.4%</option>
+                                               <option value="0.042">4.2%</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Charm / Heal</th>
+                                        <td>
+                                            <input id="charm-heal-0" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-0" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="charm-heal-1" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-1" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="charm-heal-2" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-2" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="charm-heal-3" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-3" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="charm-heal-4" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-4" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="charm-heal-5" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-5" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="charm-heal-6" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-6" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="charm-heal-7" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-7" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="charm-heal-8" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="charm-heal-8" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Trick</th>
+                                        <td>
+                                            <input id="trick-0" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-0" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="trick-1" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-1" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="trick-2" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-2" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="trick-3" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-3" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="trick-4" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-4" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="trick-5" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-5" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="trick-6" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-6" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="trick-7" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-7" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                        <td>
+                                            <input id="trick-8" class="checkbox-custom" type="checkbox" onclick="changeMemberSchoolIdolSkill(this)">
+                                            <label for="trick-8" class="checkbox-custom-label">Yes</label>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div style="margin-bottom: 10px">
 
                             <button type="button" class="btn btn-large btn-block btn-primary" onclick="calculate()">Calculate</button>
-                        </div>
-                        <div style="margin-bottom: 10px">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#cardListModal">Select card</button>
-                            <button class="btn btn-primary" onclick="updateCardListFilter()">111</button>
                         </div>
                         <div class="well well-sm">
                             <p><b id="result">Expected score: </b></p>
@@ -619,7 +648,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="row" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px">
-                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px; padding-right: 0px">
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-left: 0px; padding-right: 0px">
                                         <div class="well well-sm" style="margin-bottom: 8px; margin-left: 3px; margin-right: 3px">
                                             <div>
 
@@ -627,7 +656,7 @@
                                                 <label for="cardMuse" class="checkbox-custom-label">μ's</label>
                                             </div>
                                             <hr>
-                                            <div class="shadowed-text">
+                                            <div>
                                                 <div>
                                                     <input id="cardPrintemps" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardPrintemps" class="checkbox-custom-label">Printemps</label>
@@ -680,14 +709,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px; padding-right: 0px">
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-left: 0px; padding-right: 0px">
                                         <div class="well well-sm" style="margin-bottom: 8px; margin-left: 3px; margin-right: 3px">
                                             <div>
                                                 <input id="cardAqours" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                 <label for="cardAqours" class="checkbox-custom-label">Aqours</label>
                                             </div>
                                             <hr>
-                                            <div class="shadowed-text">
+                                            <div>
                                                 <div>
                                                     <input id="cardCYaRon" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
                                                     <label for="cardCYaRon" class="checkbox-custom-label">CYaRon</label>
@@ -741,7 +770,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px; padding-right: 0px">
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-left: 0px; padding-right: 0px">
                                         <div class="well well-sm" style="margin-bottom: 8px; margin-left: 3px; margin-right: 3px">
                                             <div>
                                                 <input id="card1stYear" class="checkbox-custom" type="checkbox" onclick="updateCardListFilter(this)">
@@ -793,19 +822,66 @@
                                             </div>
                                             <hr>
                                             <div>
-                                                <input id="cardRankUp" class="checkbox-custom" type="checkbox" onclick="changeCardListColor()" checked>
+                                                <input id="cardRankUp" class="checkbox-custom" type="checkbox" onclick="changeCardSelect()" checked>
                                                 <label for="cardRankUp" class="checkbox-custom-label">RankUp</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div>
-                                    <select name="cardList" id="cardList" class="form-control" required="required" onchange="changeCardListColor()"></select>
+                                    <div style="margin-bottom: 10px">
+                                        <select name="card-list" id="card-list" class="form-control" required="required" onchange="changeCardSelect()"></select>
+                                    </div>
+                                    <table class="table card-list" style="max-width: 100%">
+                                        <tbody>
+                                            <tr>
+                                                <td rowspan="3" style="width: 20%; text-align: center">
+                                                    <img id="avatar-card-list" src="static/image/placeHolder.png">
+                                                </td>
+                                                <th style="width: 10%">
+                                                    <span style="color: #E91E63">Smile</span>
+                                                </th>
+                                                <td style="width: 30%" id="smile-card-list">N/A</td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <span style="color: #4CAF50">Pure</span>
+                                                </th>
+                                                <td id="pure-card-list">N/A</td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <span style="color: #2196F3">Cool</span
+                                                </th>
+                                                <td id="cool-card-list">N/A</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align: center">Center Skill</th>
+                                                <th colspan="2">Description</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: center;padding: 8px" id="center-skill-card-list">N/A</td>
+                                                <td colspan="2" style="padding: 8px" id="center-skill-description-card-list">N/A</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align: center">Skill Lv</th>
+                                                <th colspan="2">Description</th>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th style="text-align: center">
+                                                    <input type="number" class="form-control" id="skill-lv-card-list" value="1" min="1" max="8" step="1" onchange="changeSkillLv(this)">
+                                                </th>
+                                                <td colspan="2" id="skill-description-card-list">N/A</td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+
                                 </div>
-                                <div id="avatar-cardlist">
-                                </div>
+
                                 <!--
                                 <div class="well well-sm">
                                     <div class="row" style="margin-left: 0px;margin-right: 0px; overflow: scroll">

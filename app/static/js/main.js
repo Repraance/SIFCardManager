@@ -6,16 +6,13 @@ $(document).ready(function() {
     $('#removeLiveList').hide();
     updateLiveLists();
     loadJSONs();
-
     disableEnableGuest();
-
+    initTeamInfo();
 })
 
 var liveList = new Array();
 var teamInfo = new Array(10);
-for (let i = 0; i < 10; i++) {
-    teamInfo[i] = new Object();
-}
+
 var colorIndex = {
     1: '#E91E63',
     2: '#4CAF50',
@@ -37,7 +34,6 @@ var rarityIndex = {
 }
 
 var live_setting_url = 'static/maps/live_setting.json'
-
 var unit_leader_skill_extra_m_url = 'static/json/unit_leader_skill_extra_m.json';
 var unit_leader_skill_m_url = 'static/json/unit_leader_skill_m.json';
 var unit_m_url = 'static/json/unit_m.json';
@@ -45,6 +41,25 @@ var unit_skill_level_m_url = 'static/json/unit_skill_level_m.json';
 var unit_skill_m_url = 'static/json/unit_skill_m.json';
 var unit_type_member_tag_m_url = 'static/json/unit_type_member_tag_m.json';
 var unit_url = 'static/json/unit.json';
+
+function initTeamInfo() {
+    for (let i = 0; i < 9; i++) {
+        teamInfo[i] = {
+            "smile": 0,
+            "pure": 0,
+            "cool": 0,
+            "cardid": 0,
+            "skilllevel": 1,
+            "mezame": 0,
+            "gemnum": 0,
+            "gemsinglepercent": 0,
+            "gemallpercent": 0,
+            "gemskill": 0,
+            "gemacc": 0
+        }
+    }
+    teamInfo[9] = new Object();
+}
 
 function loadMapsJSON() {
     $.ajaxSettings.async = false;
@@ -93,9 +108,20 @@ function loadFile() {
         reader.readAsText(resultFile, 'UTF-8');
         reader.onload = function(e) {
             var data = this.result;
-            teamInfo = JSON.parse(decodeURI(data));
-            setTeamInfo();
-            displayTeam();
+            var rawTeamInfo = JSON.parse(decodeURI(data));
+            for (let i = 0; i < 9; i++) {
+                teamInfo[i] = rawTeamInfo[i];
+                for (let j = 0; j < unit.length; j++) {
+                    if (unit[j].unit_number == teamInfo[i].cardid) {
+                        teamInfo[i].originalCardInfo = unit[j];
+                        teamInfo[i].attribute_id = teamInfo[i].originalCardInfo.attribute_id;
+                        teamInfo[i].attribute = attributeIndex[teamInfo[i].attribute_id];
+                    }
+                }
+                fillMemberInfo(i, teamInfo[i]);
+            }
+            //setTeamInfo();
+            //displayTeam();
         };
     } else {
         alert('No file chosen!');
@@ -571,7 +597,6 @@ function changeSelectColor(id) {
     }
     return 0;
 }
-
 
 
 function addLiveList() {
