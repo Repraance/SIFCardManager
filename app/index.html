@@ -31,38 +31,68 @@
 
 
                             <div style="margin-bottom: 10px">
-                                <input id="live1" class="checkbox-custom" type="checkbox" checked readonly="readonly" onclick="return false;">
-                                <label for="live1" class="checkbox-custom-label"><b style="font-size: 18px">First Live</b></label>
-                                <input id="score1" class="checkbox-custom" type="checkbox">
-                                <label for="live2" class="checkbox-custom-label">Score 1.1x</label>
+                                <div style="margin-bottom: 4px; text-align: right">
+                                    <span style="font-size: 18px; float: left">First Live</span>
+                                    <input id="score1" class="radio-custom" name="guest-bonus-score-up" type="radio">
+                                    <label for="score1" class="radio-custom-label">Score Up</label>
+                                    <input id="skill1" class="radio-custom" name="guest-bonus-skill-up" type="radio">
+                                    <label for="skill1" class="radio-custom-label">Skill Up</label>
+                                </div>
                                 <select name="live" id="liveList1" class="form-control" required="required" onchange="changeSelectColors()"></select>
                             </div>
                             <div style="margin-bottom: 10px">
-                                <input id="live2" class="checkbox-custom" type="checkbox">
-                                <label for="live2" class="checkbox-custom-label"><span style="font-size: 20px">Second Live</span></label>
-                                <select name="live" id="liveList2" class="form-control" required="required" onchange="changeSelectColors()"></select>
+                                <div style="margin-bottom: 4px; text-align: right">
+                                    <span style="font-size: 18px; float: left">Second Live</span>
+                                    <input id="score2" class="radio-custom" name="guest-bonus-score-up" type="radio">
+                                    <label for="score2" class="radio-custom-label">Score Up</label>
+                                    <input id="skill2" class="radio-custom" name="guest-bonus-skill-up" type="radio">
+                                    <label for="skill2" class="radio-custom-label">Skill Up</label>
+                                </div>
+                                <select name="live" id="liveList2" class="form-control" required="required" onchange="changeSelectColors()" disabled></select>
                             </div>
                             <div style="margin-bottom: 10px">
-                                <input id="live3" class="checkbox-custom" type="checkbox">
-                                <label for="live3" class="checkbox-custom-label"><span style="font-size: 20px">Third Live</span></label>
-                                <select name="live" id="liveList3" class="form-control" required="required" onchange="changeSelectColors()"></select>
-                            </div>
-                            <div style="margin-bottom: 10px">
-                                <b style="margin-left: 5px; margin-right: 15px">Total combo: <span id="totalCombo" style="white-space:pre"></span></b>
+                                <div style="margin-bottom: 4px; text-align: right">
+                                    <span style="font-size: 18px; float: left">Third Live</span>
+                                    <input id="score3" class="radio-custom" name="guest-bonus-score-up" type="radio">
+                                    <label for="score3" class="radio-custom-label">Score Up</label>
+                                    <input id="skill3" class="radio-custom" name="guest-bonus-skill-up" type="radio">
+                                    <label for="skill3" class="radio-custom-label">Skill Up</label>
+                                </div>
+                                <select name="live" id="liveList3" class="form-control" required="required" onchange="changeSelectColors()" disabled></select>
                             </div>
 
-                            <div class="form-inline" style="margin-bottom: 0px">
-                                <input id="no-fc" class="checkbox-custom" type="checkbox">
-                                <label for="no-fc" class="checkbox-custom-label"><b>Not full combo</b></label>
-                                <b style="margin-left: 5px">Max combo:</b>
-                                <input type="number" style="max-width: 100px" class="form-control" id="perfectRate" min="0" value="0" max="2500" step="1">
-                                <b style="margin-left: 5px">Perfect rate:</b>
-                                <input type="number" style="max-width: 100px" class="form-control" id="perfectRate" min="0" value="0.9" max="1" step="0.01">
+                            <h4 class="text-center"><b>Total Combo: <span id="total-combo">0</span></b></h4>
+
+                            <div class="well well-sm" style="margin-bottom: 0px">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="perfect-rate-addon">Perfect Rate</span>
+                                            <input type="number" class="form-control" aria-describedby="perfect-rate-addon" id="perfect-rate" min="0" value="0.9" max="1" step="0.01">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="max-combo-addon">
+                                        <input id="no-fc" class="checkbox-custom" type="checkbox">
+                                        <label for="no-fc" class="checkbox-custom-label">Not full combo</label>
+                                    </span>
+                                            <input type="text" class="form-control" placeholder="Max Combo" aria-describedby="max-combo-addon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 10px; text-align: center">
+                                    <input id="cf" class="checkbox-custom" type="checkbox">
+                                    <label for="cf" class="checkbox-custom-label">Challenge Festival (1 Live with Score Up and Skill Up)</label>
+                                </div>
+                                <div style="margin-bottom: 10px; text-align: center">
+                                    <input id="mf" class="checkbox-custom" type="checkbox">
+                                    <label for="mf" class="checkbox-custom-label" title="And you could choose random guest bonus above the live list">Medley Festival (3 Lives with Score Up and Skill Up)</label>
+                                </div>
+                                <button class="btn btn-default" style="word-wrap:break-word; width: 100%">Reset All Bonus</button>
 
                             </div>
-                            <div class="form-inline" style="margin-bottom: 0px">
 
-                            </div>
                         </div>
                     </div>
 
@@ -115,30 +145,30 @@
                 <div class="row">
 
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                        <div class="well well-sm">
+                        <div class="well well-sm" style="margin-bottom: 10px">
 
-                            <table class="table team-list" style="margin-top: 10px">
+                            <table class="table team-list" style="margin-top: 0px">
                                 <caption>
                                     <div class="form-inline text-right">
-                                        <p style="float: left; margin-left: 10px; margin-right: 10px"><b>Team info</b></p>
+                                        <p style="float: left; margin-left: 10px; margin-right: 10px; margin-bottom: 10px"><b>Team info</b></p>
                                         <input id="openFile" type="file" class="filestyle" accept=".sd">
-                                        <button class="btn btn-default" onclick="loadFile()">Load file</button>
+                                        <button class="btn btn-default" onclick="loadFile()" style="margin-bottom: 10px">Load file</button>
+                                        <button class="btn btn-default" style="margin-bottom: 10px">Save file</button>
                                     </div>
                                 </caption>
 
                                 <tbody>
                                     <tr id="weight">
                                         <th>Weight</th>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
                                     </tr>
 
                                     <tr id="avatar">
@@ -194,57 +224,56 @@
                                     </tr>
                                     <tr id="smile-value">
                                         <th><span style="color: #E91E63">Smile</span></th>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
                                     </tr>
                                     <tr id="pure-value">
                                         <th><span style="color: #4CAF50">Pure</span></th>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
                                     </tr>
                                     <tr id="cool-value">
                                         <th><span style="color: #2196F3">Cool</span></th>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
-                                        <td><input type="text" class="form-control" size="1"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
+                                        <td><input type="text" class="form-control input-sm"></td>
                                     </tr>
                                     <tr id="skill-lv">
                                         <th>Skill Lv</th>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-                                        <td><input type="number" class="form-control" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
-
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
+                                        <td><input type="number" class="form-control input-sm" value="1" min="1" max="8" step="1" onchange="changeMemberSkillLv(this)"></td>
                                     </tr>
                                     <tr id="fixed-value">
                                         <th>Fixed value</th>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -252,7 +281,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -260,7 +289,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -268,7 +297,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -276,7 +305,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -284,7 +313,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -292,7 +321,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -300,7 +329,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -308,7 +337,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="fixed-value" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="fixed-value" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="200">200</option>
                                                <option value="450">450</option>
@@ -319,7 +348,7 @@
                                     <tr id="single-percent">
                                         <th>Single percent</th>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -327,7 +356,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -335,7 +364,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -343,7 +372,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -351,7 +380,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -359,7 +388,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -367,7 +396,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -375,7 +404,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -383,7 +412,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="single-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="single-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.1">10%</option>
                                                <option value="0.16">16%</option>
@@ -394,7 +423,7 @@
                                     <tr id="total-percent">
                                         <th>Total percent</th>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -402,7 +431,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -410,7 +439,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -418,7 +447,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -426,7 +455,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -434,7 +463,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -442,7 +471,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -450,7 +479,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -458,7 +487,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="total-percent" class="form-control" onchange="changeMemberSchoolIdolSkill(this)">
+                                            <select name="total-percent" class="form-control input-sm" onchange="changeMemberSchoolIdolSkill(this)">
                                                <option value="0">0</option>
                                                <option value="0.018">1.8%</option>
                                                <option value="0.024">2.4%</option>
@@ -544,6 +573,18 @@
                                             <label for="trick-8" class="checkbox-custom-label">Yes</label>
                                         </td>
                                     </tr>
+                                    <tr id="slots">
+                                        <th>Slots</th>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                        <td><input type="text" class="form-control input-sm" value="0"></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -552,6 +593,7 @@
                             <button type="button" class="btn btn-large btn-block btn-primary" onclick="calculate()">Calculate</button>
                         </div>
                         <div class="well well-sm">
+                            <p><b id="result">Team Attribute: </b></p>
                             <p><b id="result">Expected score: </b></p>
                         </div>
                     </div>
@@ -853,7 +895,7 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <span style="color: #2196F3">Cool</span
+                                                    <span style="color: #2196F3">Cool</span>
                                                 </th>
                                                 <td id="cool-card-list">N/A</td>
                                             </tr>
@@ -869,14 +911,14 @@
                                                 <th style="text-align: center">Skill Lv</th>
                                                 <th colspan="2">Description</th>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <th style="text-align: center">
                                                     <input type="number" class="form-control" id="skill-lv-card-list" value="1" min="1" max="8" step="1" onchange="changeSkillLv(this)">
                                                 </th>
                                                 <td colspan="2" id="skill-description-card-list">N/A</td>
                                             </tr>
-                                            
+
                                         </tbody>
                                     </table>
 

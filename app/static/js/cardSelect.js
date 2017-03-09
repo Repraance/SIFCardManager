@@ -524,7 +524,7 @@ function changeSkillLv(obj) {
             var s1 = currentCardInfo.skill_info[currentCardSkillLv - 1].trigger_value;
             var s2 = currentCardInfo.skill_info[currentCardSkillLv - 1].activation_rate;
             var s3 = currentCardInfo.skill_info[currentCardSkillLv - 1].effect_value ? Number(currentCardInfo.skill_info[currentCardSkillLv - 1].effect_value) : Number(currentCardInfo.skill_info[currentCardSkillLv - 1].discharge_time);
-            var skillDescription = currentCardInfo.skill_info[0].description.replace(/\d+(\D+)\d+(\D+)\d*\.*\d*/, String(s1) + '$1' + String(s2) + '$2' + String(s3));
+            var skillDescription = currentCardInfo.skill_info[0].description.replace(/\d+(\D+)\d+(\D+)\d+\.*\d*/, String(s1) + '$1' + String(s2) + '$2' + String(s3));
             cardListSkillDescription.innerHTML = skillDescription;
         }
     }
@@ -559,6 +559,7 @@ function saveCard() {
 
 
 function fillMemberInfo(memberIndex, memberInfo) {
+
     var avatarURL = 'static/image/card/icon/';
     if (memberInfo.mezame) {
         avatarURL += 'rankup/' + String(memberInfo.cardid) + '.png';
@@ -583,6 +584,30 @@ function fillMemberInfo(memberIndex, memberInfo) {
         document.getElementById('trick-' + String(memberIndex)).checked = true;
     else
         document.getElementById('trick-' + String(memberIndex)).checked = false;
+
+
+    if (memberIndex == 4) {
+        $('.tda').text(memberInfo.attribute);
+        switch (memberInfo.attribute_id) {
+            case 1:
+                $('#guestSmile').next().children().text('Smile 9% up');
+                $('#guestPure').next().children().text('Pure 12% up');
+                $('#guestCool').next().children().text('Cool 12% up');
+                break;
+            case 2:
+                $('#guestSmile').next().children().text('Smile 12% up');
+                $('#guestPure').next().children().text('Pure 9% up');
+                $('#guestCool').next().children().text('Cool 12% up');
+                break;
+            case 3:
+                $('#guestSmile').next().children().text('Smile 12% up');
+                $('#guestPure').next().children().text('Pure 12% up');
+                $('#guestCool').next().children().text('Cool 9% up');
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 function changeMemberRankup(obj) {
@@ -622,6 +647,7 @@ function changeMemberSchoolIdolSkill(obj) {
                 teamInfo[index % 9].gemallpercent = Number($(obj).val());
                 break;
         }
+        changeSlots(index % 9);
         // Charm, Teal and Trick
     } else {
         var id = obj.id;
@@ -631,7 +657,57 @@ function changeMemberSchoolIdolSkill(obj) {
             teamInfo[index].gemskill = equipped ? 1 : 0;
         else
             teamInfo[index].gemacc = equipped ? 1 : 0;
+        changeSlots(index);
     }
+}
+
+function changeSlots(memberIndex) {
+    member = teamInfo[memberIndex];
+    member.slot = 0;
+    switch (member.gemnum) {
+        case 0:
+            break;
+        case 200:
+            member.slot += 1;
+            break;
+        case 450:
+            member.slot += 2;
+            break;
+        case 650:
+            member.slot += 3;
+            break;
+    }
+    switch (member.gemsinglepercent) {
+        case 0:
+            break;
+        case 0.1:
+            member.slot += 2;
+            break;
+        case 0.16:
+            member.slot += 3;
+            break;
+        case 0.26:
+            member.slot += 5;
+            break;
+    }
+    switch (member.gemallpercent) {
+        case 0:
+            break;
+        case 0.018:
+            member.slot += 3;
+            break;
+        case 0.024:
+            member.slot += 4;
+            break;
+        case 0.042:
+            member.slot += 7;
+            break;
+    }
+    if (member.gemskill)
+        member.slot += 4;
+    if (member.gemacc)
+        member.slot += 4;
+    $('#slots input').eq(memberIndex).val(member.slot);
 }
 
 function changeMemberSkillLv(obj) {

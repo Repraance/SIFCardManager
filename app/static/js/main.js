@@ -34,12 +34,6 @@ var rarityIndex = {
 }
 
 var live_setting_url = 'static/maps/live_setting.json'
-var unit_leader_skill_extra_m_url = 'static/json/unit_leader_skill_extra_m.json';
-var unit_leader_skill_m_url = 'static/json/unit_leader_skill_m.json';
-var unit_m_url = 'static/json/unit_m.json';
-var unit_skill_level_m_url = 'static/json/unit_skill_level_m.json';
-var unit_skill_m_url = 'static/json/unit_skill_m.json';
-var unit_type_member_tag_m_url = 'static/json/unit_type_member_tag_m.json';
 var unit_url = 'static/json/unit.json';
 
 function initTeamInfo() {
@@ -55,7 +49,8 @@ function initTeamInfo() {
             "gemsinglepercent": 0,
             "gemallpercent": 0,
             "gemskill": 0,
-            "gemacc": 0
+            "gemacc": 0,
+            "slot": 0
         }
     }
     teamInfo[9] = new Object();
@@ -71,29 +66,6 @@ function loadMapsJSON() {
 
 function loadJSONs() {
     $.ajaxSettings.async = true;
-    $.getJSON(unit_leader_skill_extra_m_url, function(json) {
-        unit_leader_skill_extra_m = json;
-    })
-
-    $.getJSON(unit_leader_skill_m_url, function(json) {
-        unit_leader_skill_m = json;
-    })
-
-    $.getJSON(unit_m_url, function(json) {
-        unit_m = json;
-    })
-
-    $.getJSON(unit_skill_level_m_url, function(json) {
-        unit_skill_level_m = json;
-    })
-
-    $.getJSON(unit_skill_m_url, function(json) {
-        unit_skill_m = json;
-    })
-
-    $.getJSON(unit_type_member_tag_m_url, function(json) {
-        unit_type_member_tag_m = json;
-    })
 
     $.getJSON(unit_url, function(json) {
         unit = json;
@@ -111,6 +83,9 @@ function loadFile() {
             var rawTeamInfo = JSON.parse(decodeURI(data));
             for (let i = 0; i < 9; i++) {
                 teamInfo[i] = rawTeamInfo[i];
+                for (let key in teamInfo[i]) {
+                    teamInfo[i][key] = Number(teamInfo[i][key]);
+                }
                 for (let j = 0; j < unit.length; j++) {
                     if (unit[j].unit_number == teamInfo[i].cardid) {
                         teamInfo[i].originalCardInfo = unit[j];
@@ -118,10 +93,9 @@ function loadFile() {
                         teamInfo[i].attribute = attributeIndex[teamInfo[i].attribute_id];
                     }
                 }
+                changeSlots(i);
                 fillMemberInfo(i, teamInfo[i]);
             }
-            //setTeamInfo();
-            //displayTeam();
         };
     } else {
         alert('No file chosen!');
@@ -155,109 +129,6 @@ function findJSON(json, key, value) {
     return returns;
 }
 
-function setTeamInfo() {
-    // Get the leader skill info
-    // and save it into teamInfo[9]
-    var leader = teamInfo[4];
-    var leaderSkillInfo;
-    var leaderSkillExtraInfo;
-    var leader_unit_id = leader.cardid;
-    var leader_skill_id;
-
-    teamInfo.push({
-        'leaderSkillInfo': undefined,
-        'leaderSkillExtraInfo': undefined
-    });
-
-
-    leader_skill_id = findJSON(unit_m, 'unit_number', leader_unit_id)[0].default_leader_skill_id;
-    if (leader_skill_id != undefined) {
-        leaderSkillInfo = findJSON(unit_leader_skill_m, 'unit_leader_skill_id', leader_skill_id)[0];
-
-        if (leaderSkillInfo != undefined) {
-            leaderSkillExtraInfo = findJSON(unit_leader_skill_extra_m, 'unit_leader_skill_id', leader_skill_id)[0];
-            teamInfo[9].leaderSkillInfo = leaderSkillInfo;
-            teamInfo[9].leaderSkillExtraInfo = leaderSkillExtraInfo;
-        }
-    }
-
-    // Get Aura/Veil school idol skills info (effect on the whole team)
-    // and save it into teamInfo[9]
-    teamInfo[9].gemallpercent = new Array();
-    for (var i = 0; i < 9; i++) {
-        teamInfo[9].gemallpercent.push(teamInfo[i].gemallpercent);
-    }
-
-    // Get member info
-    for (var i = 0; i < 9; i++) {
-        var unit_id = teamInfo[i].cardid;
-        var cardInfo = findJSON(unit_m, 'unit_number', teamInfo[i].cardid)[0];
-        $.extend(teamInfo[i], cardInfo);
-
-        // Get skill info
-        let skill_info = findJSON(unit_skill_m, 'unit_skill_id', teamInfo[i].default_unit_skill_id)[0];
-        let skill_level_info = findJSON(unit_skill_level_m, ['unit_skill_id', 'skill_level'], [teamInfo[i].default_unit_skill_id, teamInfo[i].skilllevel])[0];
-        let skill_info_all = $.extend({}, skill_level_info, skill_info);
-        console.log(skill_level_info);
-        teamInfo[i].skill_info = skill_info_all;
-        if (teamInfo[i].skill_info) {
-            teamInfo[i].skill_info.activation_rate_rev = teamInfo[i].skill_info.activation_rate;
-        }
-        if (teamInfo[i].gemskill) {
-            teamInfo[i].skill_info.effect_value *= 2.5;
-
-        }
-
-        // Get member tag 
-        var member_tag = new Array();
-        var member_tag_temp = findJSON(unit_type_member_tag_m, 'unit_type_id', teamInfo[i].unit_type_id);
-        if (member_tag_temp.length > 1) {
-            for (var j = 0; j < member_tag_temp.length; j++) {
-                member_tag.push(member_tag_temp[j].member_tag_id);
-            }
-        }
-        teamInfo[i].member_tag = member_tag;
-    }
-    console.log(teamInfo);
-}
-
-function displayTeam() {
-    var unitList = $('#unitList img');
-    for (var i = 0; i < 9; i++) {
-        let url = 'static/image/card/icon/';
-        if (teamInfo[i].mezame) {
-            url += 'rankup/';
-        } else {
-            url += 'normal/';
-        }
-        url += String(teamInfo[i].cardid) + '.png';
-        unitList.eq(i).attr('src', url);
-    }
-
-
-    var teamDefaultAttribute = teamInfo[4].attribute_id;
-    $('.tda').text(attributeIndex[teamDefaultAttribute]);
-    switch (teamDefaultAttribute) {
-        case 1:
-            $('#guestSmile').next().children().text('Smile 9% up');
-            $('#guestPure').next().children().text('Pure 12% up');
-            $('#guestCool').next().children().text('Cool 12% up');
-            break;
-        case 2:
-            $('#guestSmile').next().children().text('Smile 12% up');
-            $('#guestPure').next().children().text('Pure 9% up');
-            $('#guestCool').next().children().text('Cool 12% up');
-            break;
-        case 3:
-            $('#guestSmile').next().children().text('Smile 12% up');
-            $('#guestPure').next().children().text('Pure 12% up');
-            $('#guestCool').next().children().text('Cool 9% up');
-            break;
-        default:
-            break;
-    }
-
-}
 
 function disableEnableGuest() {
     if ($('#guest').is(':checked')) {
@@ -273,43 +144,53 @@ function disableEnableGuest() {
     }
 }
 
-function getGuestInfo() {
-    var guestEffectType = $("input[name='guestEffectType']:checked").val();
-    var guestExtraEffectType = $("input[name='guestExtraEffectType']:checked").val();
-
+function checkTeam() {
+    for (var i = 0; i < 9; i++) {
+        if (!teamInfo[i].cardid)
+            return false;
+    }
+    return true;
 }
 
-function calculateTotalAttribute(attribute_id) {
+function calculateTotalAttribute(attributeId) {
     var total = 0;
-    var attributeType = attributeIndex[attribute_id];
+    var attributeType = attributeIndex[attributeId];
     var leaderAttributeId = teamInfo[4].attribute_id;
+    var leaderSkillInfo = teamInfo[4].originalCardInfo.leader_skill_info;
+    var leaderExtraSkillInfo = teamInfo[4].originalCardInfo.leader_extra_skill_info;
+    var gemAllpercent = new Array();
+    for (let i = 0; i < 9; i++) {
+        gemAllpercent.push(teamInfo[i].gemallpercent);
+    }
 
     // Get guest info
-    if ($('#guest').is(':checked')) {
-        var guestEffectTypeId = parseInt($("input[name='guestEffectType']:checked").val());
-        var guestExtraEffectTypeId = parseInt($("input[name='guestExtraEffectType']:checked").val());
+    var guest = document.getElementById('guest').checked;
+    if (guest) {
+        var guestEffectTypeId = Number($("input[name='guestEffectType']:checked").val());
+        var guestExtraEffectTypeId = Number($("input[name='guestExtraEffectType']:checked").val());
     }
+
     // If target attribute agrees with the team leader attribute
-    if (leaderAttributeId == attribute_id) {
-        for (var i = 0; i < 9; i++) {
+    if (leaderAttributeId == attributeId) {
+        for (let i = 0; i < 9; i++) {
             var member = teamInfo[i];
-            var bareAttribute = parseInt(member[attributeType]);
+            var bareAttribute = member[attributeType];
             // bonus from school idol skills effect on single member
-            var gemSingleBonus = parseInt(member.gemnum);
+            var gemSingleBonus = member.gemnum;
             if (parseFloat(member.gemsinglepercent) > 0.16) {
                 gemSingleBonus += Math.ceil(bareAttribute * 0.1);
                 gemSingleBonus += Math.ceil(bareAttribute * 0.16);
             } else {
-                gemSingleBonus += Math.ceil(bareAttribute * parseFloat(member.gemsinglepercent));
+                gemSingleBonus += Math.ceil(bareAttribute * member.gemsinglepercent);
             }
             //bonus from school idol skills effect on sthe whole team
             var gemAllBonus = 0;
-            for (var j = 0; j < teamInfo[9].gemallpercent.length; j++) {
-                if (parseFloat(teamInfo[9].gemallpercent[j]) > 0.024) {
+            for (var j = 0; j < gemAllpercent.length; j++) {
+                if (gemAllpercent[j] > 0.024) {
                     gemAllBonus += Math.ceil(bareAttribute * 0.018);
                     gemAllBonus += Math.ceil(bareAttribute * 0.024);
                 } else {
-                    gemAllBonus += Math.ceil(bareAttribute * parseFloat(teamInfo[9].gemallpercent[j]));
+                    gemAllBonus += Math.ceil(bareAttribute * gemAllpercent[j]);
                 }
             }
             // bonus from all school idol skills
@@ -317,7 +198,6 @@ function calculateTotalAttribute(attribute_id) {
 
             // bonus from leader skill
             var leaderSkillBonus = 0;
-            var leaderSkillInfo = teamInfo[9].leaderSkillInfo;
             if (leaderSkillInfo != undefined) {
                 var effectTypeId = leaderSkillInfo.leader_skill_effect_type;
                 var effectType = attributeIndex[effectTypeId];
@@ -326,24 +206,23 @@ function calculateTotalAttribute(attribute_id) {
                     leaderSkillBonus = Math.ceil(gemBonusAttribute * leaderSkillInfo.effect_value / 100);
                     // If new leader skill e.g.スマイルPの12%分クールPがUPする
                 } else {
-                    leaderSkillBonus = Math.ceil(parseInt(member[effectType]) * leaderSkillInfo.effect_value / 100);
+                    leaderSkillBonus = Math.ceil(member[effectType] * leaderSkillInfo.effect_value / 100);
                 }
             }
 
             // bonus from extra leader skill
-            var leaderSkillExtraBonus = 0;
-            var leaderSkillExtraInfo = teamInfo[9].leaderSkillExtraInfo;
-            if (leaderSkillExtraInfo != undefined) {
-                if (member.member_tag.indexOf(leaderSkillExtraInfo.member_tag_id) > -1) {
-                    leaderSkillExtraBonus = Math.ceil(gemBonusAttribute * leaderSkillExtraInfo.effect_value / 100);
+            var leaderExtraSkillBonus = 0;
+            if (leaderExtraSkillInfo != undefined) {
+                if (member.originalCardInfo.member_tag.indexOf(leaderExtraSkillInfo.member_tag_id) > -1) {
+                    leaderExtraSkillBonus = Math.ceil(gemBonusAttribute * leaderExtraSkillInfo.effect_value / 100);
                 }
             }
 
             // bonus from guest
             var guestleaderSkillBonus = 0;
-            var guestLeaderSkillExtraBonus = 0;
+            var guestLeaderExtraSkillBonus = 0;
 
-            if ($('#guest').is(':checked')) {
+            if (guest) {
                 // bonus from guest's leader skill
                 if (!(isNaN(guestEffectTypeId))) {
                     var guestEffectType = attributeIndex[guestEffectTypeId];
@@ -357,16 +236,16 @@ function calculateTotalAttribute(attribute_id) {
                 }
                 // bonus from guest's extra leader skill
                 if (!(isNaN(guestExtraEffectTypeId))) {
-                    if (member.member_tag.indexOf(guestExtraEffectTypeId) > -1) {
+                    if (member.originalCardInfo.member_tag.indexOf(guestExtraEffectTypeId) > -1) {
                         if (guestExtraEffectTypeId == 4 || guestExtraEffectTypeId == 5) {
-                            guestLeaderSkillExtraBonus = Math.ceil(gemBonusAttribute * 0.03);
+                            guestLeaderExtraSkillBonus = Math.ceil(gemBonusAttribute * 0.03);
                         } else {
-                            guestLeaderSkillExtraBonus = Math.ceil(gemBonusAttribute * 0.06);
+                            guestLeaderExtraSkillBonus = Math.ceil(gemBonusAttribute * 0.06);
                         }
                     }
                 }
             }
-            var memberTotal = gemBonusAttribute + leaderSkillBonus + leaderSkillExtraBonus + guestleaderSkillBonus + guestLeaderSkillExtraBonus;
+            var memberTotal = gemBonusAttribute + leaderSkillBonus + leaderExtraSkillBonus + guestleaderSkillBonus + guestLeaderExtraSkillBonus;
             total += memberTotal;
         }
     } else {
@@ -584,7 +463,7 @@ function changeSelectColors() {
             combo += combo3;
         }
     }
-    $('#totalCombo').text(combo);
+    $('#total-combo').text(combo);
 }
 
 function changeSelectColor(id) {

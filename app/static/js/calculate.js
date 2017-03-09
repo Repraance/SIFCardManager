@@ -1,6 +1,6 @@
-function calculate() {
-    if (teamInfo == undefined) {
-        alert('No team info loaded!')
+function calculatebk() {
+    if (!checkTeam()) {
+        alert('Invalid team!')
         return;
     }
 
@@ -37,6 +37,18 @@ function calculate() {
     //$.post('/post', { data: JSON.stringify(teamInfo) }, function(result) {
     //    $('#result').html(result);
     //});
+}
+
+function calculate() {
+    //Check team
+    if (!checkTeam()) {
+        alert('Invalid team!')
+        return;
+    }
+    console.log('smile: ', calculateTotalAttribute(1));
+    console.log('pure: ', calculateTotalAttribute(2));
+    console.log('cool: ', calculateTotalAttribute(3));
+
 }
 
 function calculateExpectedScore(liveInfo, perfectRate, maxCombo = 0, scoreUp = false, skillUp = false) {

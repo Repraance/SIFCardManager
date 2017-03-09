@@ -21,7 +21,7 @@ td {
     vertical-align: middle!important;
 }
 
-tr.has-border-left>td {
+.has-border-left td {
     border-left: 1px solid #aaa;
 }
 
@@ -29,14 +29,28 @@ table.team-list {
     margin-top: 0px;
     margin-bottom: 0px!important;
     text-align: center;
+    table-layout: fixed;
 }
 
 label {
+    margin-bottom: 0px!important;
     font-weight: 500;
 }
 
 input {
     text-align: center;
+}
+
+#skill-lv input {
+    padding-left: 16px;
+}
+
+.input-group-addon {
+    background-color: #fff;
+}
+
+.input-sm {
+    font-size: 14px;
 }
 
 .jumbotron {
@@ -82,6 +96,21 @@ input {
     margin-bottom: 2px;
 }
 
+.img-responsive {
+    max-width: 100%!important;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .table,
+    .input-sm {
+        font-size: 10px;
+    }
+}
+
 
 /*ref: http://blog.karenmenezes.com/2014/nov/1/another-pure-css-checkbox-article/*/
 
@@ -96,8 +125,8 @@ input {
 .radio-custom,
 .radio-custom-label {
     display: inline-block;
-    margin: 2px;
     cursor: pointer;
+    margin-right: 2px;
     vertical-align: middle;
 }
 
